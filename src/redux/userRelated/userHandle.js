@@ -13,7 +13,7 @@ import {
     getError,
     UpdateComplainSuccess,
 } from './userSlice';
-const REACT_APP_BASE_URL = "http://localhost:5000";
+const REACT_APP_BASE_URL = process.env.REACT_APP_BASE_URL;
 
 export const loginUser = (fields, role) => async (dispatch) => {
     dispatch(authRequest());
