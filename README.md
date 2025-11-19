@@ -1,70 +1,109 @@
-# Getting Started with Create React App
+# Civic Connect MERN
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Civic Connect is a full-stack MERN (MongoDB, Express, React, Node.js) application designed to facilitate communication and management for civic organizations, communities, and educational institutions. It provides features for admins, teachers, students, and leaders to interact, manage events, notices, polls, complaints, and more.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **User Roles:**
+  - **Admin:** Manages the platform, oversees all community activities, resolves escalated issues, and configures system settings.
+  - **Community Leader:** Organizes events, posts notices, manages polls, addresses citizen complaints, and facilitates community engagement.
+  - **Citizen:** Participates in polls, submits complaints, views notices and events, and engages with community activities.
 
-### `npm start`
+- **Authentication:** Secure login and registration for Admins, Community Leaders, and Citizens.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Role-Based Dashboards:** Each role has a personalized dashboard with relevant tools and information.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Notice Board:** Community Leaders and Admins can post important notices. Citizens can view and acknowledge notices.
 
-### `npm test`
+- **Polls:** Community Leaders and Admins can create polls for community feedback. Citizens can vote and view poll results.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Complaints:** Citizens can submit complaints or suggestions. Community Leaders and Admins can review, respond, and resolve issues.
 
-### `npm run build`
+- **Events:** Community Leaders and Admins can organize and manage events. Citizens can view event details and RSVP.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Community Engagement:** Tools for discussions, feedback, and collaboration among all roles.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## Features
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Project Structure
+```
+Civic Connect MERN/
+├── backend/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── index.js
+│   └── package.json
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── assets/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   └── redux/
+│   ├── package.json
+│   └── README.md
+└── README.md
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Getting Started
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Prerequisites
+- Node.js
+- npm or yarn
+- MongoDB (local or cloud)
 
-## Learn More
+### Installation
+1. **Clone the repository:**
+  ```powershell
+  git clone <repo-url>
+  cd "Civic Connect MERN"
+  ```
+2. **Install backend dependencies:**
+  ```powershell
+  cd backend; npm install
+  ```
+3. **Install frontend dependencies:**
+  ```powershell
+  cd ../frontend; npm install
+  ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Running the Application
+1. **Start MongoDB** (if running locally)
+2. **Start the backend server:**
+  ```powershell
+  cd backend; npm start
+  ```
+3. **Start the frontend app:**
+  ```powershell
+  cd frontend; npm start
+  ```
+4. **Access the app:**
+  Open your browser and go to `http://localhost:3000`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Configuration
 
-### Code Splitting
+- **Backend:** Configure MongoDB connection in `backend/index.js`.
+- **Frontend:** Update API endpoints in `frontend/src` as needed.
+- **Deployment:**
+  - **Backend:** Deploy to [Render](https://render.com/). Create a new Web Service, connect your GitHub repo, set the root directory to `backend`, and add environment variables (e.g., `MONGO_URL`).
+  - **Frontend:** Deploy to [Vercel](https://vercel.com/). Import your project, set the root directory to `frontend`, and configure build settings as needed. The `vercel.json` file is included for custom configuration.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
+## Technologies Used
+- **Frontend:** React, Redux
+- **Backend:** Node.js, Express
+- **Database:** MongoDB
+- **Deployment:** Backend (Render), Frontend (Vercel)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-### Making a Progressive Web App
+## License
+This project is licensed under the MIT License.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Contact
+For questions or support, contact the project owner.
