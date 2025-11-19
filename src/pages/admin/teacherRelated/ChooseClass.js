@@ -316,9 +316,9 @@ const ChooseClass = ({ situation }) => {
 
     const navigateHandler = (classID) => {
         if (situation === "Teacher") {
-            navigate("/Admin/teachers/choosesubject/" + classID);
+            navigate("/Admin/leaders/chooseevent/" + classID);
         } else if (situation === "Subject") {
-            navigate("/Admin/addsubject/" + classID);
+            navigate("/Admin/addevent/" + classID);
         }
     };
 
@@ -413,7 +413,7 @@ const ChooseClass = ({ situation }) => {
                                     <GreenButton
                                         variant="contained"
                                         startIcon={<AddIcon />}
-                                        onClick={() => navigate("/Admin/addclass")}
+                                        onClick={() => navigate("/Admin/addcommunity")}
                                         sx={{
                                             px: 3.2,
                                             py: 1.25,
@@ -460,7 +460,7 @@ const ChooseClass = ({ situation }) => {
                                             <GreenButton
                                                 variant="contained"
                                                 startIcon={<AddIcon />}
-                                                onClick={() => navigate("/Admin/addclass")}
+                                                onClick={() => navigate("/Admin/addcommunity")}
                                                 sx={{
                                                     px: 4,
                                                     py: 1.5,

@@ -27,8 +27,8 @@ const App = () => {
             <Route path="/chooseasguest" element={<ChooseUser visitor="guest" />} />
 
             <Route path="/Adminlogin" element={<LoginPage role="Admin" />} />
-            <Route path="/Studentlogin" element={<LoginPage role="Student" />} />
-            <Route path="/Teacherlogin" element={<LoginPage role="Teacher" />} />
+            <Route path="/Citizenlogin" element={<LoginPage role="Student" />} />
+            <Route path="/Leaderlogin" element={<LoginPage role="Teacher" />} />
 
             <Route path="/Adminregister" element={<AdminRegisterPage />} />
             <Route path="*" element={<Navigate to="/" />} />

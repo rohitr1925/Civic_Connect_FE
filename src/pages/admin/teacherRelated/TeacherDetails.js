@@ -286,7 +286,7 @@ const TeacherDetails = () => {
                                     </Box>
                                 </Box>
 
-                                <Box className="detailsInfoCard">
+                                {/* <Box className="detailsInfoCard">
                                     <Box className="detailsInfoIcon">
                                         <BadgeIcon />
                                     </Box>
@@ -294,7 +294,7 @@ const TeacherDetails = () => {
                                         <p className="detailsInfoLabel">Leader ID</p>
                                         <p className="detailsInfoValue">{teacherDetails?.cid}</p>
                                     </Box>
-                                </Box>
+                                </Box> */}
                             </Box>
                         </Box>
                     </Box>

@@ -11,17 +11,31 @@ const drawerWidth = 240
 
 export const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
-        backgroundColor: theme.palette.common.black,
+        backgroundColor: '#0a78ff',
         color: theme.palette.common.white,
+        fontWeight: 700,
+        fontSize: '0.875rem',
+        letterSpacing: '0.5px',
+        textTransform: 'uppercase',
+        fontFamily: 'Inter, sans-serif',
     },
     [`&.${tableCellClasses.body}`]: {
         fontSize: 14,
+        fontFamily: 'Inter, sans-serif',
+        color: '#1a202c',
     },
 }));
 
 export const StyledTableRow = styled(TableRow)(({ theme }) => ({
     '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.action.hover,
+        backgroundColor: '#f9fbfc',
+    },
+    '&:nth-of-type(even)': {
+        backgroundColor: '#ffffff',
+    },
+    '&:hover': {
+        backgroundColor: '#f0f7ff !important',
+        transition: 'background-color 0.2s ease',
     },
     // hide last border
     '&:last-child td, &:last-child th': {

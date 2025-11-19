@@ -113,131 +113,222 @@ const ViewSubject = () => {
         background:linear-gradient(135deg,#fafcff 0%,#f5f9ff 100%);
       }
       .eventIconBadge{
-        width:90px;height:90px;border-radius:22px;
-        background:linear-gradient(135deg,var(--primary),var(--accent));
+        width:95px;height:95px;border-radius:24px;
+        background:linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
         display:flex;align-items:center;justify-content:center;
-        margin:0 auto 1.35rem;
-        color:#fff;font-size:2.4rem;font-weight:800;
-        box-shadow:0 12px 35px -10px rgba(10,120,255,.45);
+        margin:0 auto 1.5rem;
+        color:#fff;font-size:2.6rem;font-weight:800;
+        box-shadow:0 12px 35px rgba(79,70,229,0.4);
+        transition: transform .3s ease;
       }
-      .eventTitle{margin:0;font-size:2rem;font-weight:900;letter-spacing:-.8px;color:var(--text-dark);line-height:1.15;}
-      .eventSubtitle{margin:.55rem 0 0;font-size:.75rem;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;color:var(--text-mid);}
+      .eventIconBadge:hover{
+        transform: scale(1.05);
+      }
+      .eventTitle{margin:0;font-size:2.1rem;font-weight:900;letter-spacing:-.9px;color:var(--text-dark);line-height:1.2;}
+      .eventSubtitle{margin:.6rem 0 0;font-size:.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-mid);}
       .statusChip{
-        display:inline-flex;align-items:center;gap:6px;
-        font-size:.65rem;font-weight:800;letter-spacing:.8px;text-transform:uppercase;
-        padding:.45rem .75rem;border-radius:10px;margin-top:.95rem;
+        display:inline-flex;align-items:center;gap:7px;
+        font-size:.7rem;font-weight:800;letter-spacing:.9px;text-transform:uppercase;
+        padding:.5rem .85rem;border-radius:11px;margin-top:1.1rem;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
       }
-      .status-upcoming{background:#fff3d1;color:#7a5a00;border:1px solid #f5e2a2;}
-      .status-ongoing{background:#d9f8ff;color:#046175;border:1px solid #bdeaf3;}
-      .status-ended{background:#ffe4e4;color:#7a1e1e;border:1px solid #f5c7c7;}
+      .status-upcoming{background:linear-gradient(135deg, #fff3d1, #fffaeb);color:#7a5a00;border:1.5px solid #f5e2a2;}
+      .status-ongoing{background:linear-gradient(135deg, #d9f8ff, #e8fbff);color:#046175;border:1.5px solid #bdeaf3;}
+      .status-ended{background:linear-gradient(135deg, #ffe4e4, #fff0f0);color:#7a1e1e;border:1.5px solid #f5c7c7;}
       .summaryBar{
         display:grid;
         grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-        gap:1rem;
-        padding:0 2rem 1.9rem;
+        gap:1.2rem;
+        padding:0 2rem 2.2rem;
       }
       .summaryItem{
-        background:linear-gradient(135deg,#f9fbfe 0%,#f3f7fc 100%);
-        border:1px solid var(--border);
-        border-radius:16px;
-        padding:1.05rem 1.05rem .95rem;
+        background:linear-gradient(145deg, #ffffff 0%, #f8f9ff 100%);
+        border:1px solid rgba(79,70,229,0.08);
+        border-radius:18px;
+        padding:1.3rem 1.2rem 1.1rem;
         display:flex;
         flex-direction:column;
-        gap:.4rem;
+        gap:.5rem;
         position:relative;
         overflow:hidden;
-        transition:.3s;
+        transition:all .3s ease;
+        box-shadow: 0 3px 12px rgba(0,0,0,0.06);
       }
-      .summaryItem:hover{transform:translateY(-4px);box-shadow:var(--shadow-md);border-color:var(--primary);}
-      .summaryLabel{font-size:.58rem;font-weight:800;letter-spacing:.9px;text-transform:uppercase;color:var(--text-light);}
-      .summaryValue{font-size:1.05rem;font-weight:800;letter-spacing:-.3px;color:var(--text-dark);}
-      .progressWrap{margin-top:.35rem;}
+      .summaryItem::before{
+        content:'';
+        position:absolute;
+        top:0;
+        right:0;
+        width:80px;
+        height:80px;
+        background: radial-gradient(circle, rgba(79,70,229,0.05) 0%, transparent 70%);
+        border-radius:50%;
+        transform:translate(30%,-30%);
+      }
+      .summaryItem:hover{
+        transform:translateY(-5px);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        border-color:rgba(79,70,229,0.15);
+      }
+      .summaryLabel{
+        font-size:.62rem;
+        font-weight:800;
+        letter-spacing:1px;
+        text-transform:uppercase;
+        color:var(--text-light);
+        position:relative;
+        z-index:1;
+      }
+      .summaryValue{
+        font-size:1.15rem;
+        font-weight:800;
+        letter-spacing:-.4px;
+        color:var(--text-dark);
+        position:relative;
+        z-index:1;
+      }
+      .progressWrap{margin-top:.4rem;position:relative;z-index:1;}
       .progressTrack{
-        height:8px;border-radius:6px;
-        background:#e4edf5;
+        height:9px;border-radius:7px;
+        background:#e8edf5;
         overflow:hidden;
         position:relative;
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
       }
       .progressFill{
         height:100%;
-        background:linear-gradient(90deg,var(--primary),var(--accent));
+        background:linear-gradient(90deg, #4f46e5, #7c3aed);
         width:0;
-        transition:width .7s cubic-bezier(.4,0,.2,1);
+        transition:width .8s cubic-bezier(.4,0,.2,1);
+        box-shadow: 0 2px 8px rgba(79,70,229,0.3);
       }
       .detailsGrid{
-        display:grid;gap:1.35rem;
+        display:grid;gap:1.5rem;
         grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-        padding:.4rem 2rem 2rem;
+        padding:.6rem 2rem 2.2rem;
       }
       .detailCard{
-        background:linear-gradient(135deg,#f9fbfe 0%,#f3f7fc 100%);
-        border:1px solid var(--border);
+        background:linear-gradient(145deg, #ffffff 0%, #f8f9ff 100%);
+        border:1px solid rgba(79,70,229,0.08);
         border-radius:18px;
-        padding:1.1rem 1.15rem 1rem;
-        display:flex;flex-direction:column;gap:.55rem;
+        padding:1.3rem 1.3rem 1.15rem;
+        display:flex;flex-direction:column;gap:.6rem;
         position:relative;overflow:hidden;
         transition:all .35s cubic-bezier(.4,0,.2,1);
-        opacity:0;animation:cardFade .6s forwards;
+        opacity:0;animation:cardFade .65s forwards;
+        box-shadow: 0 3px 12px rgba(0,0,0,0.06);
       }
-      @keyframes cardFade{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+      @keyframes cardFade{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
       .detailCard::before{
         content:'';position:absolute;top:0;left:0;right:0;height:4px;
-        background:linear-gradient(90deg,var(--primary),var(--accent));
+        background:linear-gradient(90deg, #4f46e5, #7c3aed);
         opacity:0;transition:.35s;
       }
-      .detailCard:hover{transform:translateY(-6px);box-shadow:0 16px 34px -12px rgba(10,120,255,.25);border-color:var(--primary);}
+      .detailCard:hover{
+        transform:translateY(-7px);
+        box-shadow:0 16px 34px rgba(79,70,229,0.18);
+        border-color:rgba(79,70,229,0.2);
+      }
       .detailCard:hover::before{opacity:1;}
       .detailIcon{
-        width:46px;height:46px;border-radius:14px;
-        background:linear-gradient(135deg,#e8f2ff,#f0f7ff);
+        width:48px;height:48px;border-radius:15px;
+        background:linear-gradient(135deg, #e8f2ff, #dce8ff);
         display:flex;align-items:center;justify-content:center;
-        color:var(--primary);font-size:1.35rem;
-        box-shadow:0 6px 16px -6px rgba(10,120,255,.25);
+        color:#4f46e5;font-size:1.4rem;
+        box-shadow:0 4px 12px rgba(79,70,229,0.15);
       }
-      .detailLabel{font-size:.62rem;font-weight:800;letter-spacing:.9px;text-transform:uppercase;color:var(--text-light);margin-top:.2rem;}
-      .detailValue{font-size:.95rem;font-weight:800;letter-spacing:-.25px;color:var(--text-dark);line-height:1.3;word-break:break-word;}
+      .detailLabel{
+        font-size:.65rem;
+        font-weight:800;
+        letter-spacing:1px;
+        text-transform:uppercase;
+        color:var(--text-light);
+        margin-top:.25rem;
+      }
+      .detailValue{
+        font-size:1rem;
+        font-weight:800;
+        letter-spacing:-.3px;
+        color:var(--text-dark);
+        line-height:1.35;
+        word-break:break-word;
+      }
       .attendeesBadge{
-        display:inline-flex;align-items:center;gap:6px;
-        background:#e6fff7;color:#056c50;
-        font-size:.7rem;font-weight:700;letter-spacing:.6px;
-        padding:.45rem .75rem;border-radius:10px;text-transform:uppercase;
-        border:1px solid #c3f2e4;margin-top:.55rem;
+        display:inline-flex;align-items:center;gap:7px;
+        background:linear-gradient(135deg, #e6fff7, #f0fff9);
+        color:#056c50;
+        font-size:.72rem;font-weight:700;letter-spacing:.7px;
+        padding:.5rem .85rem;border-radius:11px;text-transform:uppercase;
+        border:1.5px solid #c3f2e4;margin-top:.6rem;
+        box-shadow: 0 2px 8px rgba(5,108,80,0.1);
       }
 
       /* Top tools bar shared */
       .citizensSectionTitle{
-        font-size:1.15rem;font-weight:800;letter-spacing:-.3px;margin:0 0 1rem;color:var(--text-dark);
+        font-size:1.2rem;
+        font-weight:800;
+        letter-spacing:-.4px;
+        margin:0 0 1.2rem;
+        color:var(--text-dark);
       }
       .citizensToolsBar{
-        display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between;
-        margin-bottom:1.2rem;background:linear-gradient(135deg,#fafcff,#f5f9ff);
-        border:1px solid var(--border);padding:1rem 1.2rem;border-radius:16px;
+        display:flex;flex-wrap:wrap;gap:1.1rem;align-items:center;justify-content:space-between;
+        margin-bottom:1.4rem;
+        background:linear-gradient(135deg, #fafcff, #f5f9ff);
+        border:1px solid rgba(79,70,229,0.08);
+        padding:1.1rem 1.3rem;
+        border-radius:18px;
+        box-shadow: 0 3px 12px rgba(0,0,0,0.06);
       }
-      .toolsSide{display:flex;gap:.8rem;align-items:center;}
+      .toolsSide{display:flex;gap:.9rem;align-items:center;}
       .barSpacer{flex:1 1 auto;}
 
       .citizensSearchField .MuiOutlinedInput-root{
-        border-radius:14px;background:#f9fbfc;font-size:.85rem;font-weight:500;border:1.5px solid #e2e8f0;transition:.2s;
+        border-radius:14px;
+        background:#f9fbfc;
+        font-size:.88rem;
+        font-weight:500;
+        border:1.5px solid #e2e8f0;
+        transition:.2s;
       }
-      .citizensSearchField .MuiOutlinedInput-root:hover{background:#fff;}
+      .citizensSearchField .MuiOutlinedInput-root:hover{
+        background:#fff;
+        border-color:rgba(79,70,229,0.2);
+      }
       .citizensSearchField .MuiOutlinedInput-root.Mui-focused{
-        background:#fff;border-color:var(--primary);box-shadow:0 0 0 3px rgba(10,120,255,.12);
+        background:#fff;
+        border-color:#4f46e5;
+        box-shadow:0 0 0 3px rgba(79,70,229,0.15);
       }
-      .toggleGroup{background:#fff;border:1px solid var(--border);border-radius:14px;padding:4px;}
+      .toggleGroup{
+        background:#fff;
+        border:1.5px solid rgba(79,70,229,0.08);
+        border-radius:14px;
+        padding:5px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      }
       .toggleGroup .MuiToggleButton-root{
-        font-size:.7rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
-        padding:.55rem .9rem;border-radius:10px;color:var(--text-mid);
+        font-size:.72rem;
+        font-weight:700;
+        letter-spacing:.9px;
+        text-transform:uppercase;
+        padding:.6rem 1rem;
+        border-radius:10px;
+        color:var(--text-mid);
+        border:none;
       }
       .toggleGroup .MuiToggleButton-root.Mui-selected{
-        background:linear-gradient(135deg,#0a78ff,#07b389);color:#fff;
+        background:linear-gradient(135deg, #4f46e5, #7c3aed);
+        color:#fff;
+        box-shadow: 0 3px 10px rgba(79,70,229,0.25);
       }
 
       /* Citizens tab table card and table beautify */
       .citizensTableCard{
         background:#fff;
-        border:1px solid var(--border);
+        border:1px solid rgba(79,70,229,0.08);
         border-radius:18px;
-        box-shadow:var(--shadow-md);
+        box-shadow: 0 4px 16px rgba(0,0,0,0.08);
         overflow:hidden;
       }
       /* Keep both tables aligned perfectly */
@@ -247,7 +338,7 @@ const ViewSubject = () => {
       }
       .citizensTableCard thead th,
       .citizensTableCard tbody td{
-        padding:12px 16px;
+        padding:13px 17px;
       }
       /* Column widths: 1) ID fixed, 2) Name fluid, 3) Actions/Status fixed */
       .citizensTableCard thead th:nth-of-type(1),
@@ -264,25 +355,69 @@ const ViewSubject = () => {
 
       .citizensTableCard .MuiTableContainer-root{border-radius:0;}
       .citizensTableCard .MuiTableHead-root .MuiTableCell-head{
-        background:linear-gradient(135deg,#f1f6ff,#eef4fb);
-        font-weight:800;letter-spacing:.6px;color:var(--text-mid);
-        text-transform:uppercase;border-bottom:1px solid #e6eef7;
+        background:linear-gradient(135deg, #f8fbff 0%, #f0f7ff 100%);
+        font-weight:800;
+        letter-spacing:.7px;
+        color:var(--text-mid);
+        text-transform:uppercase;
+        border-bottom:2px solid rgba(79,70,229,0.1);
+        font-size:.75rem;
       }
-      .citizensTableCard .MuiTableBody-root .MuiTableRow-root:nth-of-type(odd){background:#fcfdff;}
-      .citizensTableCard .MuiTableBody-root .MuiTableRow-root:hover{background:#f7fbff;}
-      .citizensTableCard .MuiTableCell-root{border-bottom:1px dashed #e6eef7;vertical-align:middle;}
-      .citizensTableCard .cellActions{display:flex;justify-content:center;align-items:center;gap:.6rem;}
-      .citizensTableCard .cellActionBtn{border-radius:10px;padding:.35rem .75rem;min-width:86px;}
-      .citizensTableCard .MuiButton-root{height:36px;border-radius:10px;font-weight:800;}
-      .citizensTableCard .cellStatus{display:flex;justify-content:center;align-items:center;font-weight:800;letter-spacing:.2px;}
+      .citizensTableCard .MuiTableBody-root .MuiTableRow-root:nth-of-type(odd){
+        background:#fcfdff;
+      }
+      .citizensTableCard .MuiTableBody-root .MuiTableRow-root:hover{
+        background:linear-gradient(135deg, #fafcff 0%, #f8fbff 100%);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      }
+      .citizensTableCard .MuiTableCell-root{
+        border-bottom:1px solid rgba(79,70,229,0.05);
+        vertical-align:middle;
+      }
+      .citizensTableCard .cellActions{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        gap:.7rem;
+      }
+      .citizensTableCard .cellActionBtn{
+        border-radius:11px;
+        padding:.4rem .8rem;
+        min-width:86px;
+        font-weight:800;
+      }
+      .citizensTableCard .MuiButton-root{
+        height:38px;
+        border-radius:11px;
+        font-weight:800;
+      }
+      .citizensTableCard .cellStatus{
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        font-weight:800;
+        letter-spacing:.3px;
+      }
 
       /* Ensure buttons consistent in bars */
-      .citizensToolsBar .MuiButton-root{height:40px;border-radius:12px;font-weight:800;}
-      .primaryBtn{padding:.6rem 1.1rem !important;border-radius:12px !important;font-weight:800 !important;}
+      .citizensToolsBar .MuiButton-root{
+        height:42px;
+        border-radius:13px;
+        font-weight:800;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      }
+      .primaryBtn{
+        padding:.65rem 1.2rem !important;
+        border-radius:13px !important;
+        font-weight:800 !important;
+      }
 
       .emptySmall{
-        text-align:center;padding:3.5rem 2rem;
-        border:2px dashed #d7e1eb;border-radius:16px;background:#fafcfe;
+        text-align:center;
+        padding:4rem 2.5rem;
+        border:2px dashed rgba(79,70,229,0.15);
+        border-radius:18px;
+        background:linear-gradient(135deg, #fafcff, #f8fbff);
       }
       .bottomSpace{height:60px;}
       @media(max-width:768px){
@@ -350,7 +485,7 @@ const ViewSubject = () => {
     <Box className="cellActions">
       <BlueButton
         variant="contained"
-        onClick={() => navigate(`/Admin/students/student/${row.id}`)}
+        onClick={() => navigate(`/Admin/citizens/citizen/${row.id}`)}
         className="cellActionBtn"
         sx={{ minWidth: 86 }}
       >
@@ -492,7 +627,7 @@ const ViewSubject = () => {
             <GreenButton
               variant="contained"
               className="primaryBtn"
-              onClick={() => navigate(`/Admin/class/addstudents/${classID}`)}
+              onClick={() => navigate(`/Admin/community/addcitizens/${classID}`)}
             >
               Add Citizens
             </GreenButton>
@@ -536,7 +671,7 @@ const ViewSubject = () => {
               <GreenButton
                 variant="contained"
                 className="primaryBtn"
-                onClick={() => navigate(`/Admin/class/addstudents/${classID}`)}
+                onClick={() => navigate(`/Admin/community/addcitizens/${classID}`)}
               >
                 Add Citizens
               </GreenButton>

@@ -25,24 +25,23 @@ const TableViewTemplate = ({ columns, rows }) => {
                     <TableBody>
                         {rows
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((row) => {
-                                return (
-                                    <StyledTableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                                        {columns.map((column, index) => {
-                                            const value = row[column.id];
-                                            return (
-                                                <StyledTableCell key={index} align={column.align}>
-                                                    {
-                                                        column.format && typeof value === 'number'
-                                                            ? column.format(value)
-                                                            : value
-                                                    }
-                                                </StyledTableCell>
-                                            );
-                                        })}
-                                    </StyledTableRow>
-                                );
-                            })}
+                            .map((row) => (
+                                <StyledTableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                                    {columns.map((column, index) => {
+                                        const value = row[column.id];
+                                        const content = column.render
+                                            ? column.render(row)
+                                            : (column.format && typeof value === 'number')
+                                                ? column.format(value)
+                                                : value;
+                                        return (
+                                            <StyledTableCell key={index} align={column.align}>
+                                                {content}
+                                            </StyledTableCell>
+                                        );
+                                    })}
+                                </StyledTableRow>
+                            ))}
                     </TableBody>
                 </Table>
             </TableContainer>

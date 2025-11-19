@@ -6,15 +6,19 @@ import { deleteUser } from '../../../redux/userRelated/userHandle';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import {
     Paper, Box, IconButton, Typography, Table, TableBody, TableCell,
-    TableContainer, TableHead, TableRow, Chip, Fade, Skeleton, Container,
-    TablePagination, TextField, InputAdornment
+    TableContainer, TableHead, TableRow, Fade, Skeleton,
+    TablePagination, TextField, InputAdornment, Tab
 } from '@mui/material';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EventIcon from '@mui/icons-material/Event';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import GroupsIcon from '@mui/icons-material/Groups';
 import SearchIcon from '@mui/icons-material/Search';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { BlueButton, GreenButton } from '../../../components/buttonStyles';
 import SpeedDialTemplate from '../../../components/SpeedDialTemplate';
 import Popup from '../../../components/Popup';
@@ -31,6 +35,12 @@ const ShowSubjects = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [searchQuery, setSearchQuery] = useState("");
+    const [tabValue, setTabValue] = useState('1');
+
+    const handleTabChange = (event, newValue) => {
+        setTabValue(newValue);
+        setPage(0); // Reset to first page when switching tabs
+    };
 
     useEffect(() => {
         const styleEl = document.createElement("style");
@@ -267,6 +277,53 @@ const ShowSubjects = () => {
             border-top:1px solid var(--border);
             background:linear-gradient(135deg,#fafcff 0%, #f8fafd 100%);
           }
+          .tabsWrapper {
+            border-bottom: 2px solid var(--border);
+            background: linear-gradient(135deg, #fafcff 0%, #f8fafd 100%);
+            padding: 0 2.5rem;
+          }
+          .tabsWrapper .MuiTabs-root {
+            min-height: 56px;
+          }
+          .tabsWrapper .MuiTab-root {
+            font-weight: 700;
+            font-size: .92rem;
+            text-transform: none;
+            letter-spacing: .3px;
+            min-height: 56px;
+            padding: 12px 24px;
+            color: var(--text-mid);
+            transition: all .2s ease;
+          }
+          .tabsWrapper .MuiTab-root.Mui-selected {
+            color: var(--primary);
+          }
+          .tabsWrapper .MuiTabs-indicator {
+            height: 3px;
+            border-radius: 3px 3px 0 0;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+          }
+          .tabPanelContent {
+            padding: 0;
+          }
+          .tabBadge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 24px;
+            height: 22px;
+            padding: 0 8px;
+            border-radius: 11px;
+            background: linear-gradient(135deg, #e8f2ff, #dce8ff);
+            color: var(--primary);
+            font-size: .75rem;
+            font-weight: 800;
+            margin-left: 8px;
+          }
+          .Mui-selected .tabBadge {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: #fff;
+          }
           @media (max-width:1024px){
             .pageWrap { padding:1.5rem 1rem; }
             .whiteBox { border-radius:16px; }
@@ -286,6 +343,7 @@ const ShowSubjects = () => {
             .contentSection { padding:1.8rem 1.5rem; }
             .headerTitle { font-size:1.7rem; }
             .headerIcon { width:58px; height:58px; }
+            .tabsWrapper { padding: 0 1.5rem; }
           }
           @media (max-width:768px){
             .customTableHeadCell { 
@@ -299,6 +357,7 @@ const ShowSubjects = () => {
             .emptyState { padding:4rem 2rem; }
             .headerSection { padding:1.5rem 1.2rem; }
             .contentSection { padding:1.5rem 1.2rem; }
+            .tabsWrapper { padding: 0 1.2rem; }
           }
         `;
         document.head.appendChild(styleEl);
@@ -318,13 +377,29 @@ const ShowSubjects = () => {
         subName: subject.subName,
         startDate: format(new Date(subject.startDate), 'dd-MM-yyyy HH:mm'),
         endDate: format(new Date(subject.endDate), 'dd-MM-yyyy HH:mm'),
+        startDateRaw: new Date(subject.startDate),
+        endDateRaw: new Date(subject.endDate),
         sclassName: subject.sclassName.sclassName,
         sclassID: subject.sclassName._id,
         id: subject._id,
     })) || [];
 
-    // Search filter
-    const filteredRows = subjectRows.filter((row) =>
+    // Get current date for comparison
+    const now = new Date();
+
+    // Separate ongoing/upcoming and completed events
+    const ongoingUpcomingEvents = subjectRows
+        .filter(row => row.endDateRaw >= now)
+        .sort((a, b) => b.startDateRaw - a.startDateRaw); // Latest first
+
+    const completedEvents = subjectRows
+        .filter(row => row.endDateRaw < now)
+        .sort((a, b) => b.endDateRaw - a.endDateRaw); // Latest completed first
+
+    // Search filter based on current tab
+    const currentEvents = tabValue === '1' ? ongoingUpcomingEvents : completedEvents;
+    
+    const filteredRows = currentEvents.filter((row) =>
         row.subName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.sclassName.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -416,7 +491,7 @@ const ShowSubjects = () => {
                                     <GreenButton
                                         variant="contained"
                                         startIcon={<PostAddIcon />}
-                                        onClick={() => navigate("/Admin/events/chooseclass")}
+                                        onClick={() => navigate("/Admin/events/choosecommunity")}
                                         sx={{
                                             px: 3,
                                             py: 1.2,
@@ -479,8 +554,34 @@ const ShowSubjects = () => {
                                             </GreenButton>
                                         </Box>
                                     ) : (
-                                        /* Events Table */
-                                        <Box className="tableWrapper">
+                                        /* Events Table with Tabs */
+                                        <TabContext value={tabValue}>
+                                            <Box className="tabsWrapper">
+                                                <TabList onChange={handleTabChange} variant="fullWidth">
+                                                    <Tab 
+                                                        label={
+                                                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                                                Ongoing / Upcoming
+                                                                <span className="tabBadge">{ongoingUpcomingEvents.length}</span>
+                                                            </Box>
+                                                        } 
+                                                        value="1" 
+                                                    />
+                                                    <Tab 
+                                                        label={
+                                                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                                                                <CheckCircleIcon sx={{ fontSize: '1.1rem', mr: 0.8 }} />
+                                                                Completed
+                                                                <span className="tabBadge">{completedEvents.length}</span>
+                                                            </Box>
+                                                        } 
+                                                        value="2" 
+                                                    />
+                                                </TabList>
+                                            </Box>
+
+                                            <TabPanel value="1" className="tabPanelContent">
+                                                <Box className="tableWrapper">
                                             <TableContainer>
                                                 <Table className="customTable" stickyHeader>
                                                     <TableHead className="customTableHead">
@@ -506,33 +607,116 @@ const ShowSubjects = () => {
                                                         {paginatedRows.map((row) => (
                                                             <TableRow key={row.id} className="customTableRow">
                                                                 <TableCell className="customTableCell">
-                                                                    <Box className="eventNameCell">
-                                                                        {row.subName}
+                                                                    <Box sx={{ 
+                                                                        display: 'flex', 
+                                                                        alignItems: 'center', 
+                                                                        gap: 1.2 
+                                                                    }}>
+                                                                        <Box sx={{
+                                                                            width: '42px',
+                                                                            height: '42px',
+                                                                            borderRadius: '12px',
+                                                                            background: 'linear-gradient(135deg, #0a78ff, #07b389)',
+                                                                            display: 'flex',
+                                                                            alignItems: 'center',
+                                                                            justifyContent: 'center',
+                                                                            color: '#fff',
+                                                                            fontWeight: 800,
+                                                                            fontSize: '1rem',
+                                                                            flexShrink: 0,
+                                                                            boxShadow: '0 4px 12px rgba(10,120,255,0.2)'
+                                                                        }}>
+                                                                            <EventIcon sx={{ fontSize: '1.2rem' }} />
+                                                                        </Box>
+                                                                        <Box sx={{ textAlign: 'left' }}>
+                                                                            <Typography sx={{
+                                                                                fontWeight: 700,
+                                                                                fontSize: '.95rem',
+                                                                                color: '#1a202c',
+                                                                                lineHeight: 1.3,
+                                                                                textAlign: 'left',
+                                                                                whiteSpace: 'normal',
+                                                                                wordBreak: 'break-word',
+                                                                                overflowWrap: 'break-word'
+                                                                            }}>
+                                                                                {row.subName}
+                                                                            </Typography>
+                                                                        </Box>
                                                                     </Box>
                                                                 </TableCell>
                                                                 <TableCell className="customTableCell">
-                                                                    <Chip
-                                                                        className="dateChip"
-                                                                        icon={<CalendarTodayIcon style={{ fontSize: '.86rem' }} />}
-                                                                        label={row.startDate}
-                                                                        size="small"
-                                                                    />
+                                                                    <Box sx={{
+                                                                        display: 'inline-flex',
+                                                                        alignItems: 'center',
+                                                                        gap: 0.8,
+                                                                        padding: '6px 12px',
+                                                                        borderRadius: '10px',
+                                                                        background: 'linear-gradient(135deg, #e6f7ff, #f0f9ff)',
+                                                                        border: '1.5px solid #bae7ff',
+                                                                        width: 'fit-content'
+                                                                    }}>
+                                                                        <CalendarTodayIcon sx={{ 
+                                                                            fontSize: '.9rem', 
+                                                                            color: '#0a78ff' 
+                                                                        }} />
+                                                                        <Typography sx={{
+                                                                            fontSize: '.85rem',
+                                                                            fontWeight: 700,
+                                                                            color: '#1a202c',
+                                                                            lineHeight: 1
+                                                                        }}>
+                                                                            {row.startDate}
+                                                                        </Typography>
+                                                                    </Box>
                                                                 </TableCell>
                                                                 <TableCell className="customTableCell">
-                                                                    <Chip
-                                                                        className="dateChip"
-                                                                        icon={<CalendarTodayIcon style={{ fontSize: '.86rem' }} />}
-                                                                        label={row.endDate}
-                                                                        size="small"
-                                                                    />
+                                                                    <Box sx={{
+                                                                        display: 'inline-flex',
+                                                                        alignItems: 'center',
+                                                                        gap: 0.8,
+                                                                        padding: '6px 12px',
+                                                                        borderRadius: '10px',
+                                                                        background: 'linear-gradient(135deg, #e8f5e9, #f1f8f4)',
+                                                                        border: '1.5px solid #b9e4c9',
+                                                                        width: 'fit-content'
+                                                                    }}>
+                                                                        <CalendarTodayIcon sx={{ 
+                                                                            fontSize: '.9rem', 
+                                                                            color: '#07b389' 
+                                                                        }} />
+                                                                        <Typography sx={{
+                                                                            fontSize: '.85rem',
+                                                                            fontWeight: 700,
+                                                                            color: '#1a202c',
+                                                                            lineHeight: 1
+                                                                        }}>
+                                                                            {row.endDate}
+                                                                        </Typography>
+                                                                    </Box>
                                                                 </TableCell>
                                                                 <TableCell className="customTableCell">
-                                                                    <Chip
-                                                                        className="communityChip"
-                                                                        icon={<GroupsIcon style={{ fontSize: '.92rem' }} />}
-                                                                        label={row.sclassName}
-                                                                        size="small"
-                                                                    />
+                                                                    <Box sx={{
+                                                                        display: 'inline-flex',
+                                                                        alignItems: 'center',
+                                                                        gap: 0.8,
+                                                                        padding: '8px 14px',
+                                                                        borderRadius: '12px',
+                                                                        background: 'linear-gradient(135deg, #fff3e0, #fff8e8)',
+                                                                        border: '1.5px solid #ffe0b2',
+                                                                        boxShadow: '0 2px 6px rgba(255,152,0,0.08)'
+                                                                    }}>
+                                                                        <GroupsIcon sx={{ 
+                                                                            fontSize: '1.1rem', 
+                                                                            color: '#f57c00' 
+                                                                        }} />
+                                                                        <Typography sx={{
+                                                                            fontSize: '.88rem',
+                                                                            fontWeight: 700,
+                                                                            color: '#1a202c'
+                                                                        }}>
+                                                                            {row.sclassName}
+                                                                        </Typography>
+                                                                    </Box>
                                                                 </TableCell>
                                                                 <TableCell className="customTableCell">
                                                                     <Box className="actionCell">
@@ -592,6 +776,223 @@ const ShowSubjects = () => {
 
                                             <SpeedDialTemplate actions={actions} />
                                         </Box>
+                                            </TabPanel>
+
+                                            <TabPanel value="2" className="tabPanelContent">
+                                                {completedEvents.filter((row) =>
+                                                    row.subName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                                    row.sclassName.toLowerCase().includes(searchQuery.toLowerCase())
+                                                ).length === 0 ? (
+                                                    <Box className="emptyState">
+                                                        <CheckCircleIcon className="emptyStateIcon" />
+                                                        <Typography className="emptyStateTitle">
+                                                            No Completed Events
+                                                        </Typography>
+                                                        <Typography className="emptyStateText">
+                                                            Completed events will appear here once they pass their end date
+                                                        </Typography>
+                                                    </Box>
+                                                ) : (
+                                                    <Box className="tableWrapper">
+                                                        <TableContainer>
+                                                            <Table className="customTable" stickyHeader>
+                                                                <TableHead className="customTableHead">
+                                                                    <TableRow>
+                                                                        <TableCell className="customTableHeadCell" sx={{ width: '27%' }}>
+                                                                            Event Name
+                                                                        </TableCell>
+                                                                        <TableCell className="customTableHeadCell" sx={{ width: '23%' }}>
+                                                                            Start Date & Time
+                                                                        </TableCell>
+                                                                        <TableCell className="customTableHeadCell" sx={{ width: '23%' }}>
+                                                                            End Date & Time
+                                                                        </TableCell>
+                                                                        <TableCell className="customTableHeadCell" sx={{ width: '17%' }}>
+                                                                            Community
+                                                                        </TableCell>
+                                                                        <TableCell className="customTableHeadCell" sx={{ width: '10%' }}>
+                                                                            Actions
+                                                                        </TableCell>
+                                                                    </TableRow>
+                                                                </TableHead>
+                                                                <TableBody>
+                                                                    {filteredRows.slice(
+                                                                        page * rowsPerPage,
+                                                                        page * rowsPerPage + rowsPerPage
+                                                                    ).map((row) => (
+                                                                        <TableRow key={row.id} className="customTableRow">
+                                                                            <TableCell className="customTableCell">
+                                                                                <Box sx={{ 
+                                                                                    display: 'flex', 
+                                                                                    alignItems: 'center', 
+                                                                                    gap: 1.2 
+                                                                                }}>
+                                                                                    <Box sx={{
+                                                                                        width: '42px',
+                                                                                        height: '42px',
+                                                                                        borderRadius: '12px',
+                                                                                        background: 'linear-gradient(135deg, #9ca3af, #6b7280)',
+                                                                                        display: 'flex',
+                                                                                        alignItems: 'center',
+                                                                                        justifyContent: 'center',
+                                                                                        color: '#fff',
+                                                                                        fontWeight: 800,
+                                                                                        fontSize: '1rem',
+                                                                                        flexShrink: 0,
+                                                                                        boxShadow: '0 4px 12px rgba(107,114,128,0.2)'
+                                                                                    }}>
+                                                                                        <CheckCircleIcon sx={{ fontSize: '1.2rem' }} />
+                                                                                    </Box>
+                                                                                    <Box sx={{ textAlign: 'left' }}>
+                                                                                        <Typography sx={{
+                                                                                            fontWeight: 700,
+                                                                                            fontSize: '.95rem',
+                                                                                            color: '#1a202c',
+                                                                                            lineHeight: 1.3,
+                                                                                            textAlign: 'left',
+                                                                                            whiteSpace: 'normal',
+                                                                                            wordBreak: 'break-word',
+                                                                                            overflowWrap: 'break-word'
+                                                                                        }}>
+                                                                                            {row.subName}
+                                                                                        </Typography>
+                                                                                    </Box>
+                                                                                </Box>
+                                                                            </TableCell>
+                                                                            <TableCell className="customTableCell">
+                                                                                <Box sx={{
+                                                                                    display: 'inline-flex',
+                                                                                    alignItems: 'center',
+                                                                                    gap: 0.8,
+                                                                                    padding: '6px 12px',
+                                                                                    borderRadius: '10px',
+                                                                                    background: 'linear-gradient(135deg, #e6f7ff, #f0f9ff)',
+                                                                                    border: '1.5px solid #bae7ff',
+                                                                                    width: 'fit-content'
+                                                                                }}>
+                                                                                    <CalendarTodayIcon sx={{ 
+                                                                                        fontSize: '.9rem', 
+                                                                                        color: '#0a78ff' 
+                                                                                    }} />
+                                                                                    <Typography sx={{
+                                                                                        fontSize: '.85rem',
+                                                                                        fontWeight: 700,
+                                                                                        color: '#1a202c',
+                                                                                        lineHeight: 1
+                                                                                    }}>
+                                                                                        {row.startDate}
+                                                                                    </Typography>
+                                                                                </Box>
+                                                                            </TableCell>
+                                                                            <TableCell className="customTableCell">
+                                                                                <Box sx={{
+                                                                                    display: 'inline-flex',
+                                                                                    alignItems: 'center',
+                                                                                    gap: 0.8,
+                                                                                    padding: '6px 12px',
+                                                                                    borderRadius: '10px',
+                                                                                    background: 'linear-gradient(135deg, #e8f5e9, #f1f8f4)',
+                                                                                    border: '1.5px solid #b9e4c9',
+                                                                                    width: 'fit-content'
+                                                                                }}>
+                                                                                    <CalendarTodayIcon sx={{ 
+                                                                                        fontSize: '.9rem', 
+                                                                                        color: '#07b389' 
+                                                                                    }} />
+                                                                                    <Typography sx={{
+                                                                                        fontSize: '.85rem',
+                                                                                        fontWeight: 700,
+                                                                                        color: '#1a202c',
+                                                                                        lineHeight: 1
+                                                                                    }}>
+                                                                                        {row.endDate}
+                                                                                    </Typography>
+                                                                                </Box>
+                                                                            </TableCell>
+                                                                            <TableCell className="customTableCell">
+                                                                                <Box sx={{
+                                                                                    display: 'inline-flex',
+                                                                                    alignItems: 'center',
+                                                                                    gap: 0.8,
+                                                                                    padding: '8px 14px',
+                                                                                    borderRadius: '12px',
+                                                                                    background: 'linear-gradient(135deg, #fff3e0, #fff8e8)',
+                                                                                    border: '1.5px solid #ffe0b2',
+                                                                                    boxShadow: '0 2px 6px rgba(255,152,0,0.08)'
+                                                                                }}>
+                                                                                    <GroupsIcon sx={{ 
+                                                                                        fontSize: '1.1rem', 
+                                                                                        color: '#f57c00' 
+                                                                                    }} />
+                                                                                    <Typography sx={{
+                                                                                        fontSize: '.88rem',
+                                                                                        fontWeight: 700,
+                                                                                        color: '#1a202c'
+                                                                                    }}>
+                                                                                        {row.sclassName}
+                                                                                    </Typography>
+                                                                                </Box>
+                                                                            </TableCell>
+                                                                            <TableCell className="customTableCell">
+                                                                                <Box className="actionCell">
+                                                                                    <BlueButton
+                                                                                        variant="contained"
+                                                                                        size="small"
+                                                                                        onClick={() => navigate(`/Admin/events/subject/${row.sclassID}/${row.id}`)}
+                                                                                        sx={{
+                                                                                            fontSize: '.82rem',
+                                                                                            px: 1.7,
+                                                                                            py: .7,
+                                                                                            fontWeight: 700,
+                                                                                            borderRadius: '11px',
+                                                                                            textTransform: 'none',
+                                                                                            boxShadow: '0 3px 10px -3px rgba(10,120,255,.3)',
+                                                                                            '&:hover': {
+                                                                                                boxShadow: '0 5px 16px -3px rgba(10,120,255,.4)',
+                                                                                                transform: 'translateY(-2px)',
+                                                                                            },
+                                                                                            transition: 'all .2s ease',
+                                                                                        }}
+                                                                                    >
+                                                                                        <VisibilityIcon style={{ marginRight: '.45rem', fontSize: '.92rem' }} />
+                                                                                        View
+                                                                                    </BlueButton>
+                                                                                </Box>
+                                                                            </TableCell>
+                                                                        </TableRow>
+                                                                    ))}
+                                                                </TableBody>
+                                                            </Table>
+                                                        </TableContainer>
+
+                                                        <TablePagination
+                                                            className="paginationContainer"
+                                                            component="div"
+                                                            count={filteredRows.length}
+                                                            page={page}
+                                                            onPageChange={handleChangePage}
+                                                            rowsPerPage={rowsPerPage}
+                                                            onRowsPerPageChange={handleChangeRowsPerPage}
+                                                            rowsPerPageOptions={[5, 10, 25, 50]}
+                                                            sx={{
+                                                                '.MuiTablePagination-toolbar': {
+                                                                    fontSize: '.88rem',
+                                                                    fontWeight: 600,
+                                                                    padding: '1.2rem 1.8rem',
+                                                                },
+                                                                '.MuiTablePagination-selectLabel, .MuiTablePagination-displayedRows': {
+                                                                    fontWeight: 600,
+                                                                    fontSize: '.88rem',
+                                                                    color: 'var(--text-mid)',
+                                                                }
+                                                            }}
+                                                        />
+
+                                                        <SpeedDialTemplate actions={actions} />
+                                                    </Box>
+                                                )}
+                                            </TabPanel>
+                                        </TabContext>
                                     )}
                                 </>
                             )}

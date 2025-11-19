@@ -528,15 +528,11 @@ const ShowClasses = () => {
     setAnchorEls(prev => ({ ...prev, [id]: null }));
 
   const actions = [
-    { icon: <AddCardIcon color="primary" />, name: 'Add New Community', action: () => navigate("/Admin/addclass") },
+    { icon: <AddCardIcon color="primary" />, name: 'Add New Community', action: () => navigate("/Admin/addcommunity") },
     { icon: <DeleteIcon color="error" />, name: 'Delete All Communities', action: () => deleteHandler(adminID, "Sclasses") },
   ];
 
   const totalCommunities = sclassesList?.length || 0;
-  const totalCitizens = (sclassesList || []).reduce(
-    (sum, s) => sum + (s?.students?.length || s?.studentsCount || 0),
-    0
-  );
   const newThisMonth = (sclassesList || []).filter((s) => {
     const d = s?.createdAt ? new Date(s.createdAt) : null;
     if (!d) return false;
@@ -563,7 +559,7 @@ const ShowClasses = () => {
               </div>
               <h2>No Communities Found</h2>
               <p>Create your first community to get started with organizing and managing your members effectively</p>
-              <button className="addButton" onClick={() => navigate("/Admin/addclass")}>
+              <button className="addButton" onClick={() => navigate("/Admin/addcommunity")}>
                 <AddCardIcon /> Create First Community
               </button>
             </div>
@@ -622,14 +618,14 @@ const ShowClasses = () => {
                     }
                   }}
                 />
-                <button className="addButton" onClick={() => navigate("/Admin/addclass")}>
+                <button className="addButton" onClick={() => navigate("/Admin/addcommunity")}>
                   <AddCardIcon /> Add Community
                 </button>
               </div>
             </div>
 
             <div className="contentSection">
-              <div className="statsBar">
+              <div className="statsBar" style={{gridTemplateColumns:'repeat(auto-fit,minmax(260px,1fr))', maxWidth:'600px', margin:'0 0 2.5rem 0', justifyContent:'flex-start'}}>
                 <div className="statCard">
                   <div className="statIconBox">
                     <GroupsIcon />
@@ -639,17 +635,6 @@ const ShowClasses = () => {
                     <span className="statValue">{totalCommunities}</span>
                   </div>
                 </div>
-
-                <div className="statCard">
-                  <div className="statIconBox">
-                    <PeopleIcon />
-                  </div>
-                  <div className="statNumbers">
-                    <span className="statLabel">Total Citizens</span>
-                    <span className="statValue">{totalCitizens}</span>
-                  </div>
-                </div>
-
                 <div className="statCard">
                   <div className="statIconBox">
                     <CalendarMonthIcon />
@@ -691,7 +676,7 @@ const ShowClasses = () => {
                           }}
                         >
                           <MenuItem onClick={() => {
-                            navigate("/Admin/addsubject/" + sclass._id);
+                            navigate("/Admin/addevent/" + sclass._id);
                             handleMenuClose(sclass._id);
                           }}>
                             <ListItemIcon>
@@ -700,7 +685,7 @@ const ShowClasses = () => {
                             Add Events
                           </MenuItem>
                           <MenuItem onClick={() => {
-                            navigate("/Admin/class/addstudents/" + sclass._id);
+                            navigate("/Admin/community/addcitizens/" + sclass._id);
                             handleMenuClose(sclass._id);
                           }}>
                             <ListItemIcon>
@@ -721,7 +706,7 @@ const ShowClasses = () => {
                       <div className="classActions">
                         <button
                           className="viewButton"
-                          onClick={() => navigate("/Admin/classes/class/" + sclass._id)}
+                          onClick={() => navigate("/Admin/communities/community/" + sclass._id)}
                         >
                           <VisibilityIcon style={{ fontSize: '.9rem' }} /> View Details
                         </button>

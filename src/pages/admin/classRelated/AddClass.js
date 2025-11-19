@@ -285,7 +285,7 @@ const AddClass = () => {
 
   useEffect(() => {
     if (status === "added" && tempDetails) {
-      navigate("/Admin/classes/class/" + tempDetails._id);
+      navigate("/Admin/communities/community/" + tempDetails._id);
       dispatch(underControl());
       setLoader(false);
     } else if (status === "failed") {

@@ -1,9 +1,10 @@
+import { Visibility, VisibilityOff, AccountCircle as AccountCircleIcon } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Grid, Box, Typography, Paper, Checkbox, FormControlLabel, TextField, CssBaseline, IconButton, InputAdornment, CircularProgress, Backdrop } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+// ...existing code...
 import bgpic from "../assets/designlogin.jpg"
 import { LightPurpleButton } from '../components/buttonStyles';
 import styled from 'styled-components';
@@ -103,9 +104,9 @@ const LoginPage = ({ role }) => {
                 navigate('/Admin/dashboard');
             }
             else if (currentRole === 'Student') {
-                navigate('/Student/dashboard');
+                navigate('/Citizen/dashboard');
             } else if (currentRole === 'Teacher') {
-                navigate('/Teacher/dashboard');
+                navigate('/Leader/dashboard');
             }
         }
         else if (status === 'failed') {
@@ -123,137 +124,124 @@ const LoginPage = ({ role }) => {
 
     return (
         <ThemeProvider theme={defaultTheme}>
-            <Grid container component="main" sx={{ height: '100vh' }}>
+            <Grid container component="main" sx={{ minHeight: '100vh', background: 'linear-gradient(135deg, #f0f7ff 0%, #e8f2ff 50%, #f3f6fa 100%)' }}>
                 <CssBaseline />
-                <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-                    <Box
-                        sx={{
-                            my: 8,
-                            mx: 4,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Typography variant="h4" sx={{ mb: 2, color: "#2c2143" }}>
-                            {role === "Student"?"Citizen":role === "Teacher"?"Community Leader":role} Login
-                        </Typography>
-                        <Typography variant="h7">
-                            Welcome back! Please enter your details
-                        </Typography>
-                        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 2 }}>
-                            {role === "Student" ? (
-                                <>
+                <Grid item xs={12} sm={8} md={5} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <LoginPanel elevation={0}>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 3 }}>
+                            <Box sx={{ width: 68, height: 68, borderRadius: '18px', background: 'linear-gradient(135deg, #0a78ff 0%, #07b389 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', boxShadow: '0 10px 30px -8px rgba(10,120,255,.45)', mb: 2 }}>
+                                {/* Icon based on role */}
+                                {role === "Admin" ? <Visibility sx={{ fontSize: '2rem' }} /> : role === "Teacher" ? <VisibilityOff sx={{ fontSize: '2rem' }} /> : <AccountCircleIcon sx={{ fontSize: '2rem' }} />}
+                            </Box>
+                            <Typography sx={{ fontFamily: 'Inter, sans-serif', fontWeight: 900, fontSize: '2rem', color: '#1a202c', letterSpacing: '-0.8px', lineHeight: 1.1, mb: 0.5 }}>
+                                {role === "Student" ? "Citizen" : role === "Teacher" ? "Community Leader" : role} Login
+                            </Typography>
+                            <Typography sx={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: '0.9rem', color: '#4a5568', letterSpacing: '1.1px', textTransform: 'uppercase', mb: 2 }}>
+                                Welcome back! Please enter your details
+                            </Typography>
+                            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 2, width: '100%' }}>
+                                {role === "Student" ? (
+                                    <>
+                                        <TextField
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            id="rollNumber"
+                                            label="Enter your Citizen ID"
+                                            name="rollNumber"
+                                            autoComplete="off"
+                                            type="number"
+                                            autoFocus
+                                            error={rollNumberError}
+                                            helperText={rollNumberError && 'Citizen ID is required'}
+                                            onChange={handleInputChange}
+                                        />
+                                        <TextField
+                                            margin="normal"
+                                            required
+                                            fullWidth
+                                            id="studentName"
+                                            label="Enter your name"
+                                            name="studentName"
+                                            autoComplete="name"
+                                            error={studentNameError}
+                                            helperText={studentNameError && 'Name is required'}
+                                            onChange={handleInputChange}
+                                        />
+                                    </>
+                                ) : (
                                     <TextField
                                         margin="normal"
                                         required
                                         fullWidth
-                                        id="rollNumber"
-                                        label="Enter your Citizen ID"
-                                        name="rollNumber"
-                                        autoComplete="off"
-                                        type="number"
+                                        id="email"
+                                        label="Enter your email"
+                                        name="email"
+                                        autoComplete="email"
                                         autoFocus
-                                        error={rollNumberError}
-                                        helperText={rollNumberError && 'Citizen ID is required'}
+                                        error={emailError}
+                                        helperText={emailError && 'Email is required'}
                                         onChange={handleInputChange}
                                     />
-                                    <TextField
-                                        margin="normal"
-                                        required
-                                        fullWidth
-                                        id="studentName"
-                                        label="Enter your name"
-                                        name="studentName"
-                                        autoComplete="name"
-                                        autoFocus
-                                        error={studentNameError}
-                                        helperText={studentNameError && 'Name is required'}
-                                        onChange={handleInputChange}
-                                    />
-                                </>
-                            ) : (
+                                )}
                                 <TextField
                                     margin="normal"
                                     required
                                     fullWidth
-                                    id="email"
-                                    label="Enter your email"
-                                    name="email"
-                                    autoComplete="email"
-                                    autoFocus
-                                    error={emailError}
-                                    helperText={emailError && 'Email is required'}
+                                    name="password"
+                                    label="Password"
+                                    type={toggle ? 'text' : 'password'}
+                                    id="password"
+                                    autoComplete="current-password"
+                                    error={passwordError}
+                                    helperText={passwordError && 'Password is required'}
                                     onChange={handleInputChange}
+                                    InputProps={{
+                                        endAdornment: (
+                                            <InputAdornment position="end">
+                                                <IconButton onClick={() => setToggle(!toggle)}>
+                                                    {toggle ? (
+                                                        <Visibility />
+                                                    ) : (
+                                                        <VisibilityOff />
+                                                    )}
+                                                </IconButton>
+                                            </InputAdornment>
+                                        ),
+                                    }}
                                 />
-                            )}
-                            <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="password"
-                                label="Password"
-                                type={toggle ? 'text' : 'password'}
-                                id="password"
-                                autoComplete="current-password"
-                                error={passwordError}
-                                helperText={passwordError && 'Password is required'}
-                                onChange={handleInputChange}
-                                InputProps={{
-                                    endAdornment: (
-                                        <InputAdornment position="end">
-                                            <IconButton onClick={() => setToggle(!toggle)}>
-                                                {toggle ? (
-                                                    <Visibility />
-                                                ) : (
-                                                    <VisibilityOff />
-                                                )}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    ),
-                                }}
-                            />
-                            <Grid container sx={{ display: "flex", justifyContent: "space-between" }}>
-                                <FormControlLabel
-                                    control={<Checkbox value="remember" color="primary" />}
-                                    label="Remember me"
-                                />
-                                <StyledLink href="#">
-                                    Forgot password?
-                                </StyledLink>
-                            </Grid>
-                            <LightPurpleButton
-                                type="submit"
-                                fullWidth
-                                variant="contained"
-                                sx={{ mt: 3 }}
-                            >
-                                {loader ?
-                                    <CircularProgress size={24} color="inherit" />
-                                    : "Login"}
-                            </LightPurpleButton>
-                            <Button
-                                fullWidth
-                                onClick={guestModeHandler}
-                                variant="outlined"
-                                sx={{ mt: 2, mb: 3, color: "#7f56da", borderColor: "#7f56da" }}
-                            >
-                                Login as Guest
-                            </Button>
-                            {role === "Admin" &&
-                                <Grid container>
-                                    <Grid>
-                                        Don't have an account?
-                                    </Grid>
-                                    <Grid item sx={{ ml: 2 }}>
-                                        <StyledLink to="/Adminregister">
+                                <Grid container sx={{ display: "flex", justifyContent: "space-between", alignItems: 'center', mt: 1 }}>
+                                    <FormControlLabel
+                                        control={<Checkbox value="remember" color="primary" />}
+                                        label={<span style={{ fontFamily: 'Inter, sans-serif', fontWeight: 500, fontSize: '0.95rem', color: '#4a5568' }}>Remember me</span>}
+                                    />
+                                    <StyledLink href="#">
+                                        Forgot password?
+                                    </StyledLink>
+                                </Grid>
+                                <LightPurpleButton
+                                    type="submit"
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 3, fontFamily: 'Inter, sans-serif', fontWeight: 700, fontSize: '1.1rem', borderRadius: '12px', boxShadow: '0 2px 8px rgba(30,45,60,0.06)' }}
+                                >
+                                    {loader ?
+                                        <CircularProgress size={24} color="inherit" />
+                                        : "Login"}
+                                </LightPurpleButton>
+                                {role === "Admin" &&
+                                    <Grid container sx={{ mt: 2, alignItems: 'center', justifyContent: 'center' }}>
+                                        <Typography sx={{ fontFamily: 'Inter, sans-serif', fontWeight: 500, fontSize: '1rem', color: '#4a5568' }}>
+                                            Don't have an account?
+                                        </Typography>
+                                        <StyledLink to="/Adminregister" style={{ marginLeft: '8px', fontWeight: 700 }}>
                                             Sign up
                                         </StyledLink>
                                     </Grid>
-                                </Grid>
-                            }
+                                }
+                            </Box>
                         </Box>
-                    </Box>
+                    </LoginPanel>
                 </Grid>
                 <Grid
                     item
@@ -275,7 +263,7 @@ const LoginPage = ({ role }) => {
                 open={guestLoader}
             >
                 <CircularProgress color="primary" />
-                Please Wait
+                <span style={{ marginLeft: '1rem', fontSize: '1.2rem' }}>Please Wait</span>
             </Backdrop>
             <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} />
         </ThemeProvider>
@@ -285,7 +273,30 @@ const LoginPage = ({ role }) => {
 export default LoginPage
 
 const StyledLink = styled(Link)`
-  margin-top: 9px;
-  text-decoration: none;
-  color: #7f56da;
+    text-decoration: none;
+    color: #0a78ff;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: color 0.2s;
+    &:hover {
+        color: #065dca;
+        text-decoration: underline;
+    }
+`;
+
+const LoginPanel = styled(Paper)`
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 16px rgba(25,40,60,0.08);
+    border: 2px solid #e2e8f0;
+    max-width: 420px;
+    width: 100%;
+    margin: 2rem auto;
+    padding: 0;
+    animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    @keyframes slideUp {
+        from { opacity: 0; transform: translateY(40px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
 `;

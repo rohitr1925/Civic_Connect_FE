@@ -6,24 +6,23 @@ import Popup from '../../../components/Popup';
 import { underControl } from '../../../redux/userRelated/userSlice';
 import { getAllSclasses } from '../../../redux/sclassRelated/sclassHandle';
 import {
-  Box,
-  Button,
-  CircularProgress,
-  Grid,
-  TextField,
-  Typography,
-  Divider,
-  Tooltip,
-  InputAdornment,
-  LinearProgress,
-  Paper,
-  Fade,
-  Zoom,
-  MenuItem,
-  Select,
-  FormControl,
-  InputLabel,
-  FormHelperText
+    Box,
+    Button,
+    CircularProgress,
+    Grid,
+    TextField,
+    Typography,
+    Tooltip,
+    InputAdornment,
+    LinearProgress,
+    Paper,
+    Fade,
+    Zoom,
+    MenuItem,
+    Select,
+    FormControl,
+    InputLabel,
+    FormHelperText
 } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import PersonIcon from '@mui/icons-material/Person';
@@ -56,7 +55,8 @@ const AddStudent = ({ situation }) => {
     const [message, setMessage] = useState("");
     const [loader, setLoader] = useState(false);
 
-    const adminID = currentUser?._id;
+    // If a teacher is adding a citizen, use the admin/school ID instead of teacher ID
+    const adminID = currentUser?.role === 'Teacher' ? (currentUser?.school?._id || currentUser?._id) : currentUser?._id;
     const role = "Student";
     const attendance = [];
 

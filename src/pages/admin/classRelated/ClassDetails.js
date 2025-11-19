@@ -108,154 +108,186 @@ const pageStyles = `
 .statCard {
   display:flex;
   align-items:center;
-  gap:.9rem;
-  background:#f7fafd;
-  border:1px solid var(--border);
-  border-radius:var(--radius-lg);
-  padding:1.1rem 1.2rem;
+  gap:1.3rem;
+  background: linear-gradient(145deg, #ffffff 0%, #f8f9ff 100%);
+  border: 1px solid rgba(79,70,229,0.08);
+  border-radius:16px;
+  padding:1.8rem 1.6rem;
   min-height:80px;
-  transition:all .2s ease;
+  transition:all .25s ease;
+  position:relative;
+  overflow:hidden;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+}
+.statCard::before {
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  width:80px;
+  height:80px;
+  background: radial-gradient(circle, rgba(79,70,229,0.05) 0%, transparent 70%);
+  border-radius:50%;
+  transform:translate(30%,-30%);
 }
 .statCard:hover {
   background:#f3f8ff;
-  border-color:var(--border-strong);
-  box-shadow:var(--shadow-sm);
-  transform:translateY(-2px);
+  border-color:rgba(79,70,229,0.15);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.11);
+  transform:translateY(-3px);
 }
 .statIcon {
-  width:50px;
-  height:50px;
-  border-radius:var(--radius-md);
-  background:#e4f1ff;
-  color:var(--primary);
+  width:56px;
+  height:56px;
+  border-radius:14px;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  color:#fff;
   display:flex;
   align-items:center;
   justify-content:center;
   flex-shrink:0;
+  box-shadow: 0 4px 12px rgba(79,70,229,0.25);
+  position:relative;
+  z-index:1;
+}
+.statIcon.citizens {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  box-shadow: 0 4px 12px rgba(59,130,246,0.25);
+}
+.statIcon.events {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  box-shadow: 0 4px 12px rgba(16,185,129,0.25);
+}
+.statIcon.new {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  box-shadow: 0 4px 12px rgba(245,158,11,0.25);
 }
 .statMeta { 
   display:flex; 
   flex-direction:column;
   flex:1;
+  position:relative;
+  z-index:1;
 }
 .statLabel {
-  font-size:.65rem;
-  font-weight:700;
-  letter-spacing:1px;
-  text-transform:uppercase;
-  color:var(--text-mid);
-  margin-bottom:.25rem;
+  font-size:.88rem;
+  font-weight:500;
+  color:var(--text-secondary);
+  margin-bottom:.5rem;
 }
 .statValue {
-  font-size:1.35rem;
+  font-size:2rem;
   font-weight:700;
-  color:var(--text-dark);
+  color:var(--text-primary);
   letter-spacing:-.5px;
+  line-height:1;
 }
 
 /* Leader details card */
 .leaderDetailsCard {
-  border:1px solid var(--border);
-  border-radius:var(--radius-lg);
+  border:1px solid rgba(79,70,229,0.12);
+  border-radius:18px;
   background:linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
-  box-shadow:var(--shadow-md);
-  padding:2rem 2.2rem;
-  transition:box-shadow .2s ease;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  padding:2.2rem 2.4rem;
+  transition:box-shadow .3s ease, transform .3s ease;
 }
 .leaderDetailsCard:hover {
-  box-shadow:var(--shadow-lg);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+  transform:translateY(-2px);
 }
 .leaderHeader {
   display:flex;
   align-items:center;
-  gap:1.2rem;
-  margin-bottom:1.6rem;
-  padding-bottom:1.2rem;
-  border-bottom:2px solid #e8f1fa;
+  gap:1.4rem;
+  margin-bottom:1.8rem;
+  padding-bottom:1.4rem;
+  border-bottom:2px solid rgba(79,70,229,0.08);
 }
 .leaderAvatarLarge {
-  width:68px;
-  height:68px;
-  border-radius:var(--radius-lg);
-  background:linear-gradient(135deg,var(--primary),var(--accent));
+  width:70px;
+  height:70px;
+  border-radius:16px;
+  background:linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
   display:flex;
   align-items:center;
   justify-content:center;
   color:#fff;
-  font-size:1.9rem;
-  box-shadow:0 8px 24px -8px rgba(10,120,255,0.45);
+  font-size:2rem;
+  box-shadow:0 6px 20px rgba(79,70,229,0.35);
   flex-shrink:0;
 }
 .leaderTitleBlock {
   flex:1;
 }
 .leaderTitleBlock h3 {
-  margin:0 0 .35rem;
-  font-size:1.4rem;
+  margin:0 0 .4rem;
+  font-size:1.5rem;
   font-weight:700;
   color:var(--text-dark);
   letter-spacing:-.4px;
 }
 .leaderTitleBlock p {
   margin:0;
-  font-size:.75rem;
-  color:var(--text-mid);
-  text-transform:uppercase;
-  letter-spacing:1.2px;
-  font-weight:600;
+  font-size:.92rem;
+  color:var(--text-secondary);
+  font-weight:500;
 }
 .leaderInfoGrid {
   display:grid;
-  gap:.9rem;
+  gap:1rem;
 }
 .leaderInfoRow {
   display:flex;
   align-items:center;
-  gap:1rem;
-  background:#f9fcff;
-  border:1px solid #e3ecf5;
-  border-radius:var(--radius-md);
-  padding:1rem 1.2rem;
-  transition:all .2s ease;
+  gap:1.2rem;
+  background: linear-gradient(135deg, #f9fcff 0%, #ffffff 100%);
+  border:1px solid rgba(79,70,229,0.08);
+  border-radius:12px;
+  padding:1.1rem 1.3rem;
+  transition:all .25s ease;
 }
 .leaderInfoRow:hover {
-  background:#f0f7ff;
-  border-color:#d0e0f0;
+  background: linear-gradient(135deg, #f3f8ff 0%, #ffffff 100%);
+  border-color:rgba(79,70,229,0.15);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   transform:translateX(4px);
 }
 .leaderInfoIcon {
-  width:44px;
-  height:44px;
-  border-radius:var(--radius-sm);
-  background:#e8f2ff;
-  color:var(--primary);
+  width:42px;
+  height:42px;
+  border-radius:10px;
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  color:#fff;
   display:flex;
   align-items:center;
   justify-content:center;
   flex-shrink:0;
+  box-shadow: 0 3px 10px rgba(79,70,229,0.2);
 }
 .leaderInfoContent {
   display:flex;
   flex-direction:column;
   flex:1;
-  min-width:0;
 }
 .leaderInfoLabel {
-  font-size:.68rem;
-  font-weight:700;
+  font-size:.78rem;
+  color:var(--text-secondary);
+  font-weight:600;
   text-transform:uppercase;
-  letter-spacing:.9px;
-  color:var(--text-mid);
-  margin-bottom:.3rem;
+  letter-spacing:.8px;
+  margin-bottom:.35rem;
 }
 .leaderInfoValue {
-  font-size:1.05rem;
-  font-weight:700;
+  font-size:1rem;
   color:var(--text-dark);
-  letter-spacing:-.3px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+  font-weight:600;
+  letter-spacing:-.2px;
+}
+
+/* Tab wrapper */
+.tabWrapper {
+  margin-top:1.5rem;
 }
 
 /* Enhanced Events & Citizens tabs styling */
@@ -269,29 +301,33 @@ const pageStyles = `
   justify-content:space-between;
   gap:1.5rem;
   margin-bottom:2rem;
-  padding:1.5rem 1.8rem;
+  padding:1.8rem 2rem;
   background:linear-gradient(135deg, #f8fbff 0%, #f0f7ff 100%);
-  border:1px solid var(--border);
-  border-radius:var(--radius-lg);
-  box-shadow:var(--shadow-sm);
+  border:1px solid rgba(79,70,229,0.08);
+  border-radius:16px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+  transition:box-shadow .3s ease;
+}
+.tabHeader:hover {
+  box-shadow: 0 5px 18px rgba(0,0,0,0.09);
 }
 .tabTitleBlock {
   display:flex;
   align-items:center;
-  gap:1rem;
+  gap:1.2rem;
   flex:1;
 }
 .tabIconCircle {
-  width:56px;
-  height:56px;
+  width:58px;
+  height:58px;
   border-radius:16px;
-  background:linear-gradient(135deg,var(--primary),var(--accent));
+  background:linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
   color:#fff;
   display:flex;
   align-items:center;
   justify-content:center;
-  box-shadow:0 8px 20px -6px rgba(10,120,255,0.4);
   flex-shrink:0;
+  box-shadow: 0 4px 14px rgba(79,70,229,0.3);
 }
 .tabTitleContent {
   display:flex;
@@ -300,83 +336,85 @@ const pageStyles = `
 }
 .tabTitle {
   margin:0;
-  font-size:1.65rem;
+  font-size:1.5rem;
   font-weight:700;
   color:var(--text-dark);
-  letter-spacing:-.5px;
+  letter-spacing:-.4px;
 }
 .tabSubtitle {
   margin:0;
-  font-size:.8rem;
-  color:var(--text-mid);
-  font-weight:600;
-  text-transform:uppercase;
-  letter-spacing:.8px;
+  font-size:.9rem;
+  color:var(--text-secondary);
+  font-weight:500;
 }
 .tabStats {
   display:flex;
   align-items:center;
   gap:.6rem;
-  padding:.5rem 1rem;
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:12px;
+  padding:.6rem 1.2rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f9fbff 100%);
+  border-radius:10px;
+  border:1px solid rgba(79,70,229,0.12);
 }
 .tabStatsLabel {
-  font-size:.7rem;
-  color:var(--text-mid);
+  font-size:.8rem;
   font-weight:600;
+  color:var(--text-secondary);
   text-transform:uppercase;
-  letter-spacing:.8px;
+  letter-spacing:.5px;
 }
 .tabStatsValue {
   font-size:1.3rem;
   font-weight:700;
-  color:var(--primary);
+  color:var(--text-dark);
+  letter-spacing:-.3px;
 }
+
+/* Empty state styling */
 .emptyState {
   text-align:center;
-  padding:4rem 2.5rem;
-  background:linear-gradient(135deg,#fafcff 0%,#f3f8ff 100%);
-  border:2px dashed var(--border);
-  border-radius:var(--radius-lg);
+  padding:4.5rem 3rem;
+  background:linear-gradient(135deg, #fafcff 0%, #f3f8ff 100%);
+  border:2px dashed rgba(79,70,229,0.15);
+  border-radius:18px;
   margin:2rem 0;
 }
 .emptyStateIcon {
-  width:100px;
-  height:100px;
-  margin:0 auto 1.6rem;
+  width:110px;
+  height:110px;
+  margin:0 auto 1.8rem;
   border-radius:50%;
-  background:linear-gradient(135deg,#e8f2ff,#d4e7ff);
-  color:var(--primary);
+  background:linear-gradient(135deg, #e8f2ff 0%, #dce8ff 100%);
+  color:#4f46e5;
   display:flex;
   align-items:center;
   justify-content:center;
-  box-shadow:0 10px 28px -8px rgba(10,120,255,0.35);
+  box-shadow: 0 8px 24px rgba(79,70,229,0.2);
 }
 .emptyStateTitle {
-  font-size:1.6rem;
+  font-size:1.7rem;
   font-weight:700;
   color:var(--text-dark);
-  margin:0 0 .7rem;
-  letter-spacing:-.4px;
+  margin:0 0 .8rem;
+  letter-spacing:-.5px;
 }
 .emptyStateText {
   font-size:1.05rem;
-  color:var(--text-mid);
-  margin:0 0 2rem;
-  line-height:1.6;
-  max-width:420px;
+  color:var(--text-secondary);
+  margin:0 0 2.2rem;
+  line-height:1.65;
+  max-width:440px;
   margin-left:auto;
   margin-right:auto;
+  font-weight:400;
 }
 
 /* Custom Table Styling */
 .customTableContainer {
   background:var(--panel-bg);
-  border:1px solid var(--border);
-  border-radius:var(--radius-lg);
-  box-shadow:var(--shadow-sm);
+  border:1px solid rgba(79,70,229,0.08);
+  border-radius:16px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.06);
   overflow:auto;
 }
 .customTable { width:100%; min-width:760px; }
@@ -384,35 +422,60 @@ const pageStyles = `
   background:linear-gradient(135deg, #f8fbff 0%, #f0f7ff 100%);
 }
 .customTableHeadCell {
-  font-size:.8rem !important;
+  font-size:.82rem !important;
   font-weight:700 !important;
   text-transform:uppercase;
   letter-spacing:.8px;
-  color:var(--text-mid) !important;
-  border-bottom:2px solid var(--border) !important;
-  padding:1rem 1.1rem !important;
-  position:sticky; top:0; z-index:2; /* sticky header */
+  color:var(--text-secondary) !important;
+  border-bottom:2px solid rgba(79,70,229,0.1) !important;
+  padding:1.1rem 1.2rem !important;
+  position:sticky; top:0; z-index:2;
 }
 .customTableBodyRow {
-  transition:background .18s ease;
+  transition:background .2s ease, box-shadow .2s ease;
+  border-bottom:1px solid rgba(79,70,229,0.05);
 }
-.customTableBodyRow:nth-of-type(even) { background:#fcfdff; }
-.customTableBodyRow:hover { background:#f7fbff; }
+.customTableBodyRow:hover {
+  background:linear-gradient(135deg, #fafcff 0%, #f8fbff 100%);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
 .customTableCell {
-  font-size:.92rem !important;
-  color:var(--text-dark) !important;
-  border-bottom:1px solid #eef3f8 !important;
-  padding:.85rem 1.1rem !important;
-  vertical-align:middle !important;
+  font-size:.95rem !important;
+  color:var(--text-primary) !important;
+  padding:1rem 1.2rem !important;
+  border-bottom:none !important;
 }
-.customTableCell .truncate {
-  display:inline-block;
-  max-width:90%;
+.rowClickable {
+  cursor:pointer;
+  font-weight:600;
+  transition:color .2s ease;
+}
+.rowClickable:hover {
+  color:#4f46e5 !important;
+}
+.truncate {
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
-  margin:0 auto;
+  max-width:280px;
+  display:inline-block;
+  vertical-align:middle;
 }
+.codeChip, .idChip {
+  font-weight:600 !important;
+  border-width:1.5px !important;
+  background: linear-gradient(135deg, #f0f7ff 0%, #e8f2ff 100%) !important;
+  color:#4f46e5 !important;
+  border-color:rgba(79,70,229,0.25) !important;
+}
+.actionButtons {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:.6rem;
+  flex-wrap:wrap;
+}
+
 .colName,
 .colCode,
 .colId,
@@ -421,24 +484,11 @@ const pageStyles = `
   text-align:center !important;
 }
 
-.colCode .cellInner,
-.colId .cellInner {
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-.colActions .actionButtons {
-  display:inline-flex;
-  justify-content:center;
-  align-items:center;
-  gap:.55rem;
-  flex-wrap:nowrap;
-}
-
-.customTableBodyRow:hover .customTableCell { background:transparent; }
-
-@media (max-width:900px){
+.rowClickable {
+  cursor:pointer;
+  font-weight:600;
+  transition:color .2s ease;
+}@media (max-width:900px){
   .panel { padding:1.8rem 1.6rem 2.2rem; }
   .headerTitle { font-size:1.7rem; }
   .headerAvatar { width:64px; height:64px; font-size:1.7rem; }
@@ -554,21 +604,21 @@ const ClassDetails = () => {
                     <div className="detailsTabContent">
                       <div className="statsSection">
                         <div className="statCard">
-                          <div className="statIcon"><PeopleIcon style={{ fontSize: '1.4rem' }} /></div>
+                          <div className="statIcon citizens"><PeopleIcon style={{ fontSize: '1.6rem' }} /></div>
                           <div className="statMeta">
                             <span className="statLabel">Total Citizens</span>
                             <span className="statValue">{totalCitizens}</span>
                           </div>
                         </div>
                         <div className="statCard">
-                          <div className="statIcon"><EventIcon style={{ fontSize: '1.4rem' }} /></div>
+                          <div className="statIcon events"><EventIcon style={{ fontSize: '1.6rem' }} /></div>
                           <div className="statMeta">
                             <span className="statLabel">Total Events</span>
                             <span className="statValue">{totalEvents}</span>
                           </div>
                         </div>
                         <div className="statCard">
-                          <div className="statIcon"><CalendarMonthIcon style={{ fontSize: '1.4rem' }} /></div>
+                          <div className="statIcon new"><CalendarMonthIcon style={{ fontSize: '1.6rem' }} /></div>
                           <div className="statMeta">
                             <span className="statLabel">New This Month</span>
                             <span className="statValue">{newEventsThisMonth}</span>
@@ -623,7 +673,7 @@ const ClassDetails = () => {
                           <p className="emptyStateText">Get started by creating your first community event to engage with citizens</p>
                           <GreenButton 
                             variant="contained" 
-                            onClick={() => navigate("/Admin/addsubject/" + classID)}
+                            onClick={() => navigate("/Admin/addevent/" + classID)}
                             sx={{ px: 3.5, py: 1.3, fontSize: '1rem', fontWeight: 600, borderRadius: '12px' }}
                           >
                             <PostAddIcon style={{ marginRight: '.6rem', fontSize: '1.3rem' }} /> 
@@ -649,7 +699,7 @@ const ClassDetails = () => {
                               </div>
                               <GreenButton 
                                 variant="contained" 
-                                onClick={() => navigate("/Admin/addsubject/" + classID)}
+                                onClick={() => navigate("/Admin/addevent/" + classID)}
                                 sx={{ px: 2.8, py: 1.1, fontSize: '.92rem', fontWeight: 600, borderRadius: '12px' }}
                               >
                                 <PostAddIcon style={{ marginRight: '.5rem', fontSize: '1.15rem' }} /> 
@@ -674,7 +724,7 @@ const ClassDetails = () => {
                                     <TableCell
                                       className="customTableCell colName rowClickable"
                                       align="center"
-                                      onClick={() => navigate(`/Admin/class/subject/${classID}/${subject._id}`)}
+                                      onClick={() => navigate(`/Admin/community/event/${classID}/${subject._id}`)}
                                     >
                                       <span className="truncate">{subject.subName}</span>
                                     </TableCell>
@@ -695,7 +745,7 @@ const ClassDetails = () => {
                                         <BlueButton
                                           variant="contained"
                                           size="small"
-                                          onClick={() => navigate(`/Admin/class/subject/${classID}/${subject._id}`)}
+                                          onClick={() => navigate(`/Admin/community/event/${classID}/${subject._id}`)}
                                           sx={{ fontSize: '.8rem', px: 1.3 }}
                                         >
                                           <VisibilityIcon style={{ marginRight: '.3rem', fontSize: '.9rem' }} />
@@ -710,7 +760,7 @@ const ClassDetails = () => {
                           </TableContainer>
 
                           <SpeedDialTemplate actions={[
-                            { icon: <PostAddIcon color="primary" />, name: 'Add New Event', action: () => navigate("/Admin/addsubject/" + classID) },
+                            { icon: <PostAddIcon color="primary" />, name: 'Add New Event', action: () => navigate("/Admin/addevent/" + classID) },
                             { icon: <DeleteIcon color="error" />, name: 'Delete All Events', action: () => deleteHandler(classID, "SubjectsClass") }
                           ]} />
                         </>
@@ -729,7 +779,7 @@ const ClassDetails = () => {
                           <p className="emptyStateText">Begin building your community by adding the first citizen member</p>
                           <GreenButton 
                             variant="contained" 
-                            onClick={() => navigate("/Admin/class/addstudents/" + classID)}
+                            onClick={() => navigate("/Admin/community/addcitizens/" + classID)}
                             sx={{ px: 3.5, py: 1.3, fontSize: '1rem', fontWeight: 600, borderRadius: '12px' }}
                           >
                             <PersonAddAlt1Icon style={{ marginRight: '.6rem', fontSize: '1.3rem' }} /> 
@@ -755,7 +805,7 @@ const ClassDetails = () => {
                               </div>
                               <GreenButton 
                                 variant="contained" 
-                                onClick={() => navigate("/Admin/class/addstudents/" + classID)}
+                                onClick={() => navigate("/Admin/community/addcitizens/" + classID)}
                                 sx={{ px: 2.8, py: 1.1, fontSize: '.92rem', fontWeight: 600, borderRadius: '12px' }}
                               >
                                 <PersonAddAlt1Icon style={{ marginRight: '.5rem', fontSize: '1.15rem' }} /> 
@@ -780,7 +830,7 @@ const ClassDetails = () => {
                                     <TableCell
                                       className="customTableCell colName rowClickable"
                                       align="center"
-                                      onClick={() => navigate("/Admin/students/student/" + student._id)}
+                                      onClick={() => navigate("/Admin/citizens/citizen/" + student._id)}
                                     >
                                       <span className="truncate">{student.name}</span>
                                     </TableCell>
@@ -801,7 +851,7 @@ const ClassDetails = () => {
                                         <BlueButton
                                           variant="contained"
                                           size="small"
-                                          onClick={() => navigate("/Admin/students/student/" + student._id)}
+                                          onClick={() => navigate("/Admin/citizens/citizen/" + student._id)}
                                           sx={{ fontSize: '.8rem', px: 1.3 }}
                                         >
                                           <VisibilityIcon style={{ marginRight: '.3rem', fontSize: '.9rem' }} />
@@ -810,7 +860,7 @@ const ClassDetails = () => {
                                         <PurpleButton
                                           variant="contained"
                                           size="small"
-                                          onClick={() => navigate("/Admin/students/student/attendance/" + student._id)}
+                                          onClick={() => navigate("/Admin/citizens/citizen/attendance/" + student._id)}
                                           sx={{ fontSize: '.8rem', px: 1.3 }}
                                         >
                                           Attendance
@@ -824,7 +874,7 @@ const ClassDetails = () => {
                           </TableContainer>
 
                           <SpeedDialTemplate actions={[
-                            { icon: <PersonAddAlt1Icon color="primary" />, name: 'Add New Citizen', action: () => navigate("/Admin/class/addstudents/" + classID) },
+                            { icon: <PersonAddAlt1Icon color="primary" />, name: 'Add New Citizen', action: () => navigate("/Admin/community/addcitizens/" + classID) },
                             { icon: <PersonRemoveIcon color="error" />, name: 'Delete All Citizens', action: () => deleteHandler(classID, "StudentsClass") }
                           ]} />
                         </>

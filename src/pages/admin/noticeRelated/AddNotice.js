@@ -11,7 +11,6 @@ import {
   Typography,
   InputAdornment,
   CircularProgress,
-  Stack,
 } from '@mui/material';
 import CampaignIcon from '@mui/icons-material/Campaign';
 import TitleIcon from '@mui/icons-material/Title';
@@ -120,8 +119,8 @@ const AddNotice = () => {
                 <CampaignIcon sx={{ fontSize:'1.5rem' }}/>
               </Box>
               <Box>
-                <Typography className="add-title">Add EAR</Typography>
-                <Typography className="add-subtitle">Create a new Event Activity Report</Typography>
+                <Typography className="add-title">Add Notice</Typography>
+                <Typography className="add-subtitle">Create a new Notice</Typography>
               </Box>
             </Box>
             <Button
@@ -138,7 +137,7 @@ const AddNotice = () => {
               <TextField
                 className="mui-text"
                 label="Title"
-                placeholder="Enter EAR title"
+                placeholder="Enter Notice title"
                 fullWidth
                 required
                 value={title}
@@ -178,7 +177,7 @@ const AddNotice = () => {
               <TextField
                 className="mui-text"
                 label="Details"
-                placeholder="Enter EAR details"
+                placeholder="Enter Notice details"
                 fullWidth
                 required
                 multiline

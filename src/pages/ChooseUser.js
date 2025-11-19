@@ -47,7 +47,7 @@ const ChooseUser = ({ visitor }) => {
         dispatch(loginUser(fields, user))
       }
       else {
-        navigate('/Studentlogin');
+        navigate('/Citizenlogin');
       }
     }
 
@@ -59,7 +59,7 @@ const ChooseUser = ({ visitor }) => {
         dispatch(loginUser(fields, user))
       }
       else {
-        navigate('/Teacherlogin');
+        navigate('/Leaderlogin');
       }
     }
   }
@@ -70,9 +70,9 @@ const ChooseUser = ({ visitor }) => {
         navigate('/Admin/dashboard');
       }
       else if (currentRole === 'Student') {
-        navigate('/Student/dashboard');
+        navigate('/Citizen/dashboard');
       } else if (currentRole === 'Teacher') {
-        navigate('/Teacher/dashboard');
+        navigate('/Leader/dashboard');
       }
     }
     else if (status === 'error') {

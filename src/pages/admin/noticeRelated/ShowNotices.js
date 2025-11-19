@@ -60,38 +60,41 @@ const ShowNotices = () => {
             .add-notice-btn { height:44px !important; font-weight:800 !important; font-size:.85rem !important; text-transform:none !important; border-radius:14px !important; padding:.75rem 1.6rem !important; background:linear-gradient(135deg, var(--notice-accent), #058b65) !important; color:#fff !important; box-shadow:0 6px 18px -6px rgba(7,179,137,.4) !important; transition:.3s !important; }
             .add-notice-btn:hover { transform:translateY(-3px) !important; box-shadow:0 10px 24px -4px rgba(7,179,137,.45) !important; }
 
-            .notices-table-wrap { padding:1.8rem 2.2rem 0; }
-            .table-footer-wrap { padding:0 2.2rem 2.2rem; }
+            .notices-table-wrap { padding:1.8rem 2.5rem 0; }
+            .table-footer-wrap { padding:0 2.5rem 2.5rem; }
 
             .notices-table-card { border:1px solid var(--notice-border); border-radius:18px; overflow:hidden; background:#fff; box-shadow:0 4px 16px rgba(25,40,60,.08); }
             .notices-table { width:100%; border-collapse:separate; border-spacing:0; table-layout:fixed; }
 
-            .notices-table thead th { background:linear-gradient(135deg,#f2f7ff,#edf4fb); font-weight:800; font-size:.85rem; letter-spacing:.6px; color:var(--notice-text-mid); text-transform:uppercase; padding:16px 18px; border-bottom:2px solid #e3edf6; text-align:left; }
+            .notices-table thead th { background:linear-gradient(135deg,#f2f7ff,#edf4fb); font-weight:800; font-size:.88rem; letter-spacing:.65px; color:var(--notice-text-mid); text-transform:uppercase; padding:18px 20px; border-bottom:2px solid #e3edf6; text-align:center; vertical-align:middle; width:25%; }
             .notices-table thead th.actions-head { text-align:center; }
 
             .notices-table tbody tr { transition:.25s; border-bottom:1px solid #eef4f9; }
             .notices-table tbody tr:nth-of-type(even) { background:#fafcfe; }
             .notices-table tbody tr:hover { background:#f6faff; }
 
-            .notices-table tbody td { padding:16px 18px; font-size:.95rem; font-weight:600; color:var(--notice-text-dark); vertical-align:middle; overflow:hidden; }
+            .notices-table tbody td { padding:18px 20px; font-size:.95rem; font-weight:600; color:var(--notice-text-dark); vertical-align:middle; text-align:center; width:25%; }
+            .notices-table tbody td:first-child { text-align:left; }
 
             .notice-title-cell { display:flex; align-items:center; gap:1rem; min-width:0; }
-            .notice-icon { width:42px; height:42px; border-radius:10px; background:linear-gradient(135deg,#e8f2ff,#d6ebff); display:flex; align-items:center; justify-content:center; color:var(--notice-primary); flex-shrink:0; }
-            .notice-title-text { font-weight:700; color:var(--notice-text-dark); line-height:1.3; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+            .notice-icon { width:44px; height:44px; border-radius:11px; background:linear-gradient(135deg,#e8f2ff,#d6ebff); display:flex; align-items:center; justify-content:center; color:var(--notice-primary); flex-shrink:0; box-shadow:0 3px 8px rgba(10,120,255,.15); }
+            .notice-icon svg { font-size:1.2rem !important; }
+            .notice-title-text { font-weight:700; color:var(--notice-text-dark); line-height:1.4; flex:1; }
 
-            .notice-details-text { display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; color:var(--notice-text-mid); font-weight:600; }
+            .notice-details-text { display:inline-block; color:var(--notice-text-mid); font-weight:600; line-height:1.5; word-break:break-word; text-align:center; }
 
-            .date-cell { display:flex; align-items:center; gap:.5rem; }
-            .notice-date-chip { display:inline-flex; align-items:center; gap:.5rem; padding:.5rem 1rem; border-radius:10px; background:linear-gradient(135deg,#d4f4e8,#c0ecd9); color:#056c50; font-size:.8rem; font-weight:700; letter-spacing:.3px; }
+            .date-cell { display:inline-flex; align-items:center; gap:.6rem; justify-content:center; }
+            .notice-date-chip { display:inline-flex; align-items:center; gap:.55rem; padding:.6rem 1.1rem; border-radius:10px; background:linear-gradient(135deg,#e8f5e9,#c8e6c9); color:#2e7d32; font-size:.82rem; font-weight:700; letter-spacing:.3px; white-space:nowrap; }
 
-            .notice-actions { display:flex; gap:.5rem; justify-content:center; }
-            .delete-btn { width:38px !important; height:38px !important; border-radius:10px !important; background:#fff !important; border:1px solid #ffebee !important; color:var(--notice-danger) !important; transition:.25s !important; }
+            .notice-actions { display:flex; gap:.5rem; justify-content:center; align-items:center; }
+            .delete-btn { width:40px !important; height:40px !important; border-radius:10px !important; background:#fff !important; border:1px solid #ffebee !important; color:var(--notice-danger) !important; transition:.25s !important; }
             .delete-btn:hover { background:var(--notice-danger) !important; color:#fff !important; transform:translateY(-2px); box-shadow:0 6px 14px rgba(244,67,54,.3) !important; }
+            .delete-btn svg { font-size:1.15rem !important; }
 
-            .empty-state { padding:4rem 2rem; text-align:center; border:2px dashed #d5e0ea; border-radius:18px; background:linear-gradient(135deg,#fafcfe,#f4f8fb); }
-            .empty-icon { font-size:3.5rem; color:var(--notice-primary); opacity:.7; margin-bottom:1rem; }
-            .empty-title { font-size:1.4rem; font-weight:800; color:var(--notice-text-dark); margin-bottom:.5rem; }
-            .empty-text { font-size:.95rem; color:var(--notice-text-mid); font-weight:600; }
+            .empty-state { padding:5rem 2.5rem; text-align:center; border:2px dashed #d5e0ea; border-radius:18px; background:linear-gradient(135deg,#fafcfe,#f4f8fb); }
+            .empty-icon { font-size:4.5rem !important; color:var(--notice-primary); opacity:.7; margin-bottom:1.5rem; }
+            .empty-title { font-size:1.6rem; font-weight:800; color:var(--notice-text-dark); margin-bottom:.7rem; letter-spacing:-.5px; }
+            .empty-text { font-size:1.05rem; color:var(--notice-text-mid); font-weight:600; line-height:1.6; }
 
             .highlight-mark { background:#ffe58f; border-radius:3px; padding:0 2px; }
 
@@ -159,9 +162,6 @@ const ShowNotices = () => {
         [filtered, page, rowsPerPage]
     );
 
-    const handleChangePage = (_e, newPage) => setPage(newPage);
-    const handleChangeRowsPerPage = (e) => { setRowsPerPage(parseInt(e.target.value, 10)); setPage(0); };
-
     const actions = [
         { icon: <NoteAddIcon color="primary" />, name: 'Add New EAR', action: () => navigate("/Admin/addnotice") },
         { icon: <DeleteIcon color="error" />, name: 'Delete All EARs', action: () => deleteHandler(currentUser._id, "Notices") }
@@ -193,10 +193,10 @@ const ShowNotices = () => {
                                         <CampaignIcon sx={{ fontSize: '1.6rem' }} />
                                     </Box>
                                     <Box>
-                                        <Typography className="notices-title">EARs Management</Typography>
+                                        <Typography className="notices-title">Emergency Alerts</Typography>
                                         <Typography className="notices-subtitle">
                                             <TrendingUpIcon fontSize="inherit" />
-                                            Manage Event Activity Reports
+                                            Manage Alerts
                                         </Typography>
                                     </Box>
                                 </Box>
@@ -243,10 +243,10 @@ const ShowNotices = () => {
                                     <TableContainer className="notices-table-card">
                                         <Table className="notices-table">
                                             <colgroup>
-                                                <col style={{ width: '35%' }} />
-                                                <col style={{ width: '40%' }} />
-                                                <col style={{ width: '15%' }} />
-                                                <col style={{ width: '10%' }} />
+                                                <col style={{ width: '25%' }} />
+                                                <col style={{ width: '25%' }} />
+                                                <col style={{ width: '25%' }} />
+                                                <col style={{ width: '25%' }} />
                                             </colgroup>
                                             <TableHead>
                                                 <TableRow>

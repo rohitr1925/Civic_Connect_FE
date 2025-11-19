@@ -215,14 +215,14 @@ const StudentDetails = () => {
                 <BlueButton
                   variant="contained"
                   startIcon={<FactCheckIcon />}
-                  onClick={() => navigate(`/Admin/students/student/attendance/${studentID}`)}
+                  onClick={() => navigate(`/Admin/citizens/citizen/attendance/${studentID}`)}
                 >
                   Take Attendance
                 </BlueButton>
                 <PurpleButton
                   variant="contained"
                   startIcon={<EmojiEventsIcon />}
-                  onClick={() => navigate(`/Admin/students/student/marks/${studentID}`)}
+                  onClick={() => navigate(`/Admin/citizens/citizen/marks/${studentID}`)}
                 >
                   Provide Marks
                 </PurpleButton>

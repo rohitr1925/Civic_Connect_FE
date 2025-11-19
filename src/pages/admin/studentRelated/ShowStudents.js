@@ -7,7 +7,7 @@ import { deleteUser } from '../../../redux/userRelated/userHandle';
 import {
   Box, IconButton, TextField, InputAdornment, Fade,
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
-  Tooltip, Menu, MenuItem, Button, TableFooter, Pagination
+  Tooltip, Menu, MenuItem, Button, TablePagination
 } from '@mui/material';
 
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
@@ -25,12 +25,11 @@ import { GreenButton } from '../../../components/buttonStyles';
 import SpeedDialTemplate from '../../../components/SpeedDialTemplate';
 import Popup from '../../../components/Popup';
 
-const rowsPerPage = 10;
-
 const ShowStudents = () => {
+  const { studentsList = [], loading, error } = useSelector((state) => state.student);
+  const totalCitizens = studentsList.length;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { studentsList = [], loading, error } = useSelector((state) => state.student);
   const { currentUser } = useSelector(state => state.user);
 
   const [showPopup, setShowPopup] = useState(false);
@@ -40,6 +39,7 @@ const ShowStudents = () => {
   const [actionRowId, setActionRowId] = useState(null);
   const [sortConfig, setSortConfig] = useState({ key: 'name', direction: 'asc' });
   const [page, setPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   useEffect(() => {
     const styleEl = document.createElement('style');
@@ -77,30 +77,39 @@ const ShowStudents = () => {
       .statLabel{font-size:.65rem;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:var(--text-light);}
       .statValue{font-size:1.15rem;font-weight:900;letter-spacing:-.4px;color:var(--text-dark);}
 
-      .tableWrap{padding:1.8rem 2.2rem 2.3rem;}
-      .citizensTableCard{border:1px solid var(--border);border-radius:20px;overflow:hidden;background:#fff;box-shadow:var(--shadow-md);}
-      .citizensTable{width:100%;border-collapse:collapse;}
-      .citizensTable thead th{background:linear-gradient(135deg,#f2f7ff,#edf4fb);font-weight:800;font-size:.85rem;letter-spacing:.65px;color:var(--text-mid);text-transform:uppercase;padding:18px 20px;border-bottom:2px solid #e3edf6;user-select:none;cursor:pointer;}
+      .tableWrap{padding:1.8rem 2.5rem 0;}
+      .table-footer-wrap{padding:0 2.5rem 2.5rem;}
+      .citizensTableCard{border:1px solid var(--border);border-radius:18px;overflow:hidden;background:#fff;box-shadow:var(--shadow-md);}
+      .citizensTable{width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed;}
+      .citizensTable thead th{background:linear-gradient(135deg,#f2f7ff,#edf4fb);font-weight:800;font-size:.88rem;letter-spacing:.65px;color:var(--text-mid);text-transform:uppercase;padding:18px 20px;border-bottom:2px solid #e3edf6;text-align:center;vertical-align:middle;user-select:none;cursor:pointer;}
       .citizensTable thead th.sortable:hover{background:linear-gradient(135deg,#eaf3ff,#e6f0fa);}
+      .citizensTable thead th.actions-head{text-align:center;cursor:default;}
       .sortIndicator{margin-left:6px;display:inline-flex;vertical-align:middle;opacity:.7;}
-      .citizensTable tbody tr{transition:.25s;}
+      .citizensTable tbody tr{transition:.25s;border-bottom:1px solid #eef4f9;}
       .citizensTable tbody tr:nth-of-type(even){background:#fafcfe;}
       .citizensTable tbody tr:hover{background:#f6faff;}
-      .citizensTable tbody td{padding:18px 20px;font-size:1rem;font-weight:600;color:var(--text-dark);border-bottom:1px solid #eef4f9;vertical-align:middle;}
+      .citizensTable tbody td{padding:18px 20px;font-size:.98rem;font-weight:600;color:var(--text-dark);vertical-align:middle;text-align:center;}
+      .citizensTable tbody td:first-child{text-align:left;}
       .highlightMark{background:#ffe58f;border-radius:4px;padding:0 2px;}
-      .nameCell{display:flex;align-items:center;gap:.75rem;}
-      .nameAvatar{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,#e8f2ff,#d6ebff);display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;color:var(--primary);box-shadow:0 2px 6px rgba(10,120,255,.18);}
-      .communityChip{display:inline-flex;align-items:center;font-size:.72rem;font-weight:800;letter-spacing:.4px;padding:.5rem .8rem;border-radius:9px;background:linear-gradient(135deg,#d4f4e8,#c0ecd9);color:#056c50;}
+      .nameCell{display:flex;align-items:center;gap:1rem;min-width:0;}
+      .nameAvatar{width:44px;height:44px;border-radius:11px;background:linear-gradient(135deg,#e8f2ff,#d6ebff);display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:800;color:var(--primary);box-shadow:0 3px 8px rgba(10,120,255,.2);flex-shrink:0;}
+      .nameCell span{font-weight:700;line-height:1.4;flex:1;}
+      .communityChip{display:inline-flex;align-items:center;font-size:.82rem;font-weight:700;letter-spacing:.3px;padding:.6rem 1.1rem;border-radius:10px;background:linear-gradient(135deg,#e8f5e9,#c8e6c9);color:#2e7d32;white-space:nowrap;}
       .cellActions{display:flex;align-items:center;justify-content:center;gap:.55rem;flex-wrap:wrap;}
-      .actionBtn{height:36px;padding:.5rem .85rem;font-size:.74rem;font-weight:800;text-transform:none;border-radius:10px;display:flex;align-items:center;gap:.4rem;box-shadow:0 2px 8px rgba(0,0,0,.08);transition:.25s;border:none;cursor:pointer;background:#fff;color:var(--text-mid);border:1px solid #e3e9ef;}
-      .actionBtn:hover{transform:translateY(-3px);box-shadow:0 6px 14px rgba(0,0,0,.15);color:var(--text-dark);border-color:#cbd5e0;}
-      .viewBtn{background:linear-gradient(135deg,#0a78ff,#065dca)!important;color:#fff!important;border:none!important;}
+      .actionBtn{height:38px!important;padding:.55rem .95rem!important;font-size:.78rem!important;font-weight:800!important;text-transform:none!important;border-radius:10px!important;display:inline-flex!important;align-items:center!important;gap:.45rem!important;box-shadow:0 2px 8px rgba(0,0,0,.08)!important;transition:.25s!important;border:none!important;}
+      .actionBtn:hover{transform:translateY(-2px)!important;box-shadow:0 6px 14px rgba(0,0,0,.15)!important;}
+      .viewBtn{background:linear-gradient(135deg,#0a78ff,#065dca)!important;color:#fff!important;}
       .viewBtn:hover{background:linear-gradient(135deg,#065dca,#054aa8)!important;}
-      .deleteBtn{color:var(--danger)!important;background:#fff!important;border:1px solid var(--danger-light)!important;}
-      .deleteBtn:hover{background:var(--danger-light)!important;border-color:#ffcdd2!important;color:#c62828!important;}
-      .emptyState{padding:4.2rem 2.4rem;text-align:center;border:2px dashed #d5e0ea;border-radius:20px;background:linear-gradient(135deg,#fafcfe,#f4f8fb);}
-      .emptyIcon{font-size:3.4rem;color:var(--primary);opacity:.8;margin-bottom:1rem;}
-      .paginationWrap{padding:1.1rem 1.8rem;display:flex;justify-content:flex-end;}
+      .deleteBtn{color:var(--danger)!important;background:#fff!important;border:1px solid #ffebee!important;width:40px!important;height:40px!important;min-width:40px!important;padding:0!important;}
+      .deleteBtn:hover{background:var(--danger)!important;color:#fff!important;border-color:var(--danger)!important;}
+      .moreBtn{color:var(--text-mid)!important;background:#fff!important;border:1px solid #e3e9ef!important;width:40px!important;height:40px!important;min-width:40px!important;padding:0!important;}
+      .moreBtn:hover{color:var(--primary)!important;border-color:#cbd5e0!important;background:#f7fbff!important;}
+      .emptyState{padding:5rem 2.5rem;text-align:center;border:2px dashed #d5e0ea;border-radius:18px;background:linear-gradient(135deg,#fafcfe,#f4f8fb);}
+      .emptyIcon{font-size:4.5rem!important;color:var(--primary);opacity:.7;margin-bottom:1.5rem;}
+      .emptyState h4{font-size:1.6rem;font-weight:800;color:var(--text-dark);margin:0 0 .7rem 0;letter-spacing:-.5px;}
+      .emptyState p{font-size:1.05rem;color:var(--text-mid);font-weight:600;line-height:1.6;margin:0;}
+      .paginationWrap{padding:1.1rem 0;display:flex;justify-content:flex-end;}
+      .paginationWrap .MuiPagination-root{font-weight:700;}
       @media(max-width:900px){
         .panelHeader{flex-direction:column;align-items:flex-start;}
         .headerRight{width:100%;justify-content:space-between;}
@@ -205,12 +214,12 @@ const ShowStudents = () => {
   const paginated = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     return sorted.slice(start, start + rowsPerPage);
-  }, [sorted, page]);
+  }, [sorted, page, rowsPerPage]);
 
   useEffect(() => {
     const totalPages = Math.max(1, Math.ceil(sorted.length / rowsPerPage));
     if (page > totalPages) setPage(1);
-  }, [sorted, page]);
+  }, [sorted, page, rowsPerPage]);
 
   const getInitials = (name) => {
     if (!name) return '?';
@@ -218,18 +227,18 @@ const ShowStudents = () => {
   };
 
   const handleAttendance = () => {
-    if (actionRowId) navigate("/Admin/students/student/attendance/" + actionRowId);
+    if (actionRowId) navigate("/Admin/citizens/citizen/attendance/" + actionRowId);
     handleCloseActions();
   };
   
   const handleMarks = () => {
-    if (actionRowId) navigate("/Admin/students/student/marks/" + actionRowId);
+    if (actionRowId) navigate("/Admin/citizens/citizen/marks/" + actionRowId);
     handleCloseActions();
   };
 
   const handleAddCitizen = useCallback(() => {
     console.log('Navigating to add student page...');
-    navigate("/Admin/addstudents");
+    navigate("/Admin/addcitizens");
   }, [navigate]);
 
   const handleSearchChange = useCallback((e) => {
@@ -292,14 +301,33 @@ const ShowStudents = () => {
                   </Button>
                 </Box>
               </Box>
+              {/* Stat card for total citizens */}
+              <Box className="statsBar" sx={{ padding: '1.2rem 2.2rem', borderBottom: '1px solid #e2e8f0', display: 'flex', flexWrap: 'wrap', gap: '1.4rem', background: '#fbfdff', justifyContent: 'flex-start', maxWidth: '400px', marginLeft: 0 }}>
+                <Box className="statItem" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start', minWidth: 0 }}>
+                  <Box className="statIcon" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mr: 1 }}><GroupIcon /></Box>
+                  <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center' }}>
+                    <span className="statLabel" style={{ marginBottom: 2 }}>Total Citizens</span>
+                    <span className="statValue">{totalCitizens}</span>
+                  </Box>
+                </Box>
+              </Box>
 
               <Box className="tableWrap">
-                {sorted.length > 0 ? (
-                  <TableContainer
-                    className="citizensTableCard"
-                    sx={{ maxHeight: 'calc(100vh - 280px)' }}
-                  >
-                    <Table className="citizensTable" stickyHeader>
+                {sorted.length === 0 ? (
+                  <Box className="emptyState">
+                    <SearchIcon className="emptyIcon" />
+                    <h4>{searchTerm ? 'No citizens match your search' : 'No citizens found'}</h4>
+                    <p>{searchTerm ? 'Try adjusting your keywords or clear the search.' : 'Start by adding a new citizen record.'}</p>
+                  </Box>
+                ) : (
+                  <TableContainer className="citizensTableCard">
+                    <Table className="citizensTable">
+                      <colgroup>
+                        <col style={{ width: '25%' }} />
+                        <col style={{ width: '25%' }} />
+                        <col style={{ width: '25%' }} />
+                        <col style={{ width: '25%' }} />
+                      </colgroup>
                       <TableHead>
                         <TableRow>
                           <TableCell
@@ -323,7 +351,7 @@ const ShowStudents = () => {
                           >
                             Community {sortIcon('community')}
                           </TableCell>
-                          <TableCell align="center" style={{ cursor: 'default' }}>
+                          <TableCell align="center" className="actions-head">
                             Actions
                           </TableCell>
                         </TableRow>
@@ -332,7 +360,7 @@ const ShowStudents = () => {
                         {paginated.map((student) => {
                           const community = student.sclassName?.sclassName || 'N/A';
                           return (
-                            <TableRow key={student._id}>
+                            <TableRow key={student._id} hover>
                               <TableCell>
                                 <Box className="nameCell">
                                   <Box className="nameAvatar">{getInitials(student.name)}</Box>
@@ -348,7 +376,7 @@ const ShowStudents = () => {
                                   <Tooltip title="View" arrow>
                                     <Button
                                       className="actionBtn viewBtn"
-                                      onClick={() => navigate("/Admin/students/student/" + student._id)}
+                                      onClick={() => navigate("/Admin/citizens/citizen/" + student._id)}
                                       variant="contained"
                                     >
                                       <VisibilityIcon sx={{ fontSize: '1rem' }} /> View
@@ -381,33 +409,27 @@ const ShowStudents = () => {
                           );
                         })}
                       </TableBody>
-                      <TableFooter>
-                        <TableRow>
-                          <TableCell colSpan={4}>
-                            <Box className="paginationWrap">
-                              <Pagination
-                                count={Math.max(1, Math.ceil(sorted.length / rowsPerPage))}
-                                page={page}
-                                color="primary"
-                                size="small"
-                                onChange={(_, value) => setPage(value)}
-                                showFirstButton
-                                showLastButton
-                              />
-                            </Box>
-                          </TableCell>
-                        </TableRow>
-                      </TableFooter>
                     </Table>
                   </TableContainer>
-                ) : (
-                  <Box className="emptyState">
-                    <SearchIcon className="emptyIcon" />
-                    <h4>{searchTerm ? 'No citizens match your search' : 'No citizens found'}</h4>
-                    <p>{searchTerm ? 'Try adjusting your keywords or clear the search.' : 'Start by adding a new citizen record.'}</p>
-                  </Box>
                 )}
               </Box>
+
+              {sorted.length > 0 && (
+                <Box className="table-footer-wrap">
+                  <TablePagination
+                    component="div"
+                    count={sorted.length}
+                    page={page - 1}
+                    onPageChange={(_, p) => setPage(p + 1)}
+                    rowsPerPage={rowsPerPage}
+                    onRowsPerPageChange={(e) => { setRowsPerPage(parseInt(e.target.value, 10)); setPage(1); }}
+                    rowsPerPageOptions={[5, 10, 25, 50]}
+                    labelRowsPerPage="Rows:"
+                    showFirstButton
+                    showLastButton
+                  />
+                </Box>
+              )}
             </Box>
             <SpeedDialTemplate actions={actions} />
           </Box>

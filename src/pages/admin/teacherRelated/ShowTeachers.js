@@ -7,8 +7,6 @@ import {
 } from '@mui/material';
 import { deleteUser } from '../../../redux/userRelated/userHandle';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
-import { GreenButton, BlueButton } from '../../../components/buttonStyles';
-import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import SpeedDialTemplate from '../../../components/SpeedDialTemplate';
 import Popup from '../../../components/Popup';
 import GroupsIcon from '@mui/icons-material/Groups';
@@ -17,7 +15,6 @@ import SearchIcon from '@mui/icons-material/Search';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PersonIcon from '@mui/icons-material/Person';
-import BadgeIcon from '@mui/icons-material/Badge';
 
 const ShowTeachers = () => {
     const navigate = useNavigate();
@@ -423,11 +420,6 @@ const ShowTeachers = () => {
 
     const actions = [
         {
-            icon: <PersonAddAlt1Icon color="primary" />, 
-            name: 'Add New Community Leader',
-            action: () => navigate("/Admin/teachers/chooseclass")
-        },
-        {
             icon: <PersonRemoveIcon color="error" />, 
             name: 'Delete All Community Leaders',
             action: () => deleteHandler(currentUser._id, "Teachers")
@@ -465,22 +457,6 @@ const ShowTeachers = () => {
                                 <p className="emptyTeachersText">
                                     Add your first community leader to get started with managing your communities
                                 </p>
-                                <GreenButton
-                                    variant="contained"
-                                    startIcon={<PersonAddAlt1Icon />}
-                                    onClick={() => navigate("/Admin/teachers/chooseclass")}
-                                    sx={{
-                                        px: 4,
-                                        py: 1.5,
-                                        fontWeight: 700,
-                                        fontSize: '.94rem',
-                                        borderRadius: '14px',
-                                        textTransform: 'none',
-                                        boxShadow: '0 6px 20px -6px rgba(7,179,137,.4)',
-                                    }}
-                                >
-                                    Add Community Leader
-                                </GreenButton>
                             </Box>
                         </Box>
                     </Fade>
@@ -541,20 +517,6 @@ const ShowTeachers = () => {
                                         }
                                     }}
                                 />
-                                <GreenButton
-                                    variant="contained"
-                                    startIcon={<PersonAddAlt1Icon />}
-                                    onClick={() => navigate("/Admin/teachers/chooseclass")}
-                                    sx={{
-                                        height: 40,
-                                        fontWeight: 800,
-                                        borderRadius: '12px',
-                                        textTransform: 'none',
-                                        boxShadow: '0 6px 18px -6px rgba(7,179,137,.4)'
-                                    }}
-                                >
-                                    Add Leader
-                                </GreenButton>
                             </Box>
                         </Box>
 
@@ -615,7 +577,7 @@ const ShowTeachers = () => {
                                                     <Box className="leaderCardFooter">
                                                         <button
                                                             className="leaderViewButton"
-                                                            onClick={() => navigate("/Admin/teachers/teacher/" + teacher.cid)}
+                                                            onClick={() => navigate("/Admin/leaders/leader/" + teacher.cid)}
                                                         >
                                                             <VisibilityIcon style={{ fontSize: '.9rem' }} /> View Details
                                                         </button>

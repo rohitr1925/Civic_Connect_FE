@@ -429,16 +429,21 @@ const StudentExamMarks = ({ situation }) => {
             dispatch(getUserDetails(stdID, "Student"));
         }
         else if (situation === "Subject") {
-            const { studentID, subjectID } = params
+            const { studentID } = params
             setStudentID(studentID);
             dispatch(getUserDetails(studentID, "Student"));
-            setChosenSubName(subjectID);
         }
     }, [situation]);
 
     useEffect(() => {
         if (userDetails && userDetails.sclassName && situation === "Student") {
-            dispatch(getSubjectList(userDetails.sclassName._id, "ClassSubjects"));
+            dispatch(getSubjectList(userDetails.sclassName._id, null,  "ClassSubjects"));
+        }
+    }, [dispatch, userDetails]);
+
+    useEffect(() => {
+        if (userDetails && userDetails.sclassName && situation === "Subject") {
+            dispatch(getSubjectList(userDetails.sclassName._id,null, "ClassSubjects"));
         }
     }, [dispatch, userDetails]);
 
@@ -537,7 +542,7 @@ const StudentExamMarks = ({ situation }) => {
 
                                 <form onSubmit={submitHandler}>
                                     <Stack spacing={0}>
-                                        {situation === "Student" && (
+                                        {(situation === "Student" || situation === "Subject") && (
                                             <FormControl fullWidth className="marks-custom-form-control">
                                                 <InputLabel id="event-select-label">Select Event</InputLabel>
                                                 <Select

@@ -39,7 +39,7 @@ const ChooseSubject = ({ situation }) => {
             <h1>Sorry all subjects have teachers assigned already</h1>
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
                 <PurpleButton variant="contained"
-                    onClick={() => navigate("/Admin/addsubject/" + classID)}>
+                    onClick={() => navigate("/Admin/addevent/" + classID)}>
                     Add Events
                 </PurpleButton>
             </Box>
@@ -51,7 +51,7 @@ const ChooseSubject = ({ situation }) => {
     const updateSubjectHandler = (teacherId, teachSubject) => {
         setLoader(true)
         dispatch(updateTeachSubject(teacherId, teachSubject))
-        navigate("/Admin/teachers")
+        navigate("/Admin/leaders")
     }
 
     return (
@@ -81,7 +81,7 @@ const ChooseSubject = ({ situation }) => {
                                     <StyledTableCell align="center">
                                         {situation === "Norm" ?
                                             <GreenButton variant="contained"
-                                                onClick={() => navigate("/Admin/teachers/addteacher/" + subject._id)}>
+                                                onClick={() => navigate("/Admin/leaders/addleader/" + subject._id)}>
                                                 Choose
                                             </GreenButton>
                                             :

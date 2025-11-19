@@ -417,7 +417,7 @@ const ViewStudent = () => {
                         Overall Attendance Percentage: {overallAttendancePercentage.toFixed(2)}%
                     </div>
                     <Button variant="contained" color="error" startIcon={<DeleteIcon />} onClick={() => removeHandler(studentID, "RemoveStudentAtten")}>Delete All</Button>
-                    <Button variant="contained" className="actionButton" sx={styles.styledButton} onClick={() => navigate("/Admin/students/student/attendance/" + studentID)}>
+                    <Button variant="contained" className="actionButton" sx={styles.styledButton} onClick={() => navigate("/Admin/citizens/citizen/attendance/" + studentID)}>
                         Add Attendance
                     </Button>
                 </>
@@ -454,7 +454,7 @@ const ViewStudent = () => {
                         </Paper>
                     </>
                     :
-                    <Button variant="contained" className="actionButton" sx={styles.styledButton} onClick={() => navigate("/Admin/students/student/attendance/" + studentID)}>
+                    <Button variant="contained" className="actionButton" sx={styles.styledButton} onClick={() => navigate("/Admin/citizens/citizen/attendance/" + studentID)}>
                         Add Attendance
                     </Button>
                 }
@@ -488,7 +488,7 @@ const ViewStudent = () => {
                             })}
                         </TableBody>
                     </Table>
-                    <Button variant="contained" className="actionButton" sx={styles.styledButton} onClick={() => navigate("/Admin/students/student/marks/" + studentID)}>
+                    <Button variant="contained" className="actionButton" sx={styles.styledButton} onClick={() => navigate("/Admin/citizens/citizen/marks/" + studentID)}>
                         ADD SCORE
                     </Button>
                 </>
@@ -525,7 +525,7 @@ const ViewStudent = () => {
                         </Paper>
                     </>
                     :
-                    <Button variant="contained" className="actionButton" sx={styles.styledButton} onClick={() => navigate("/Admin/students/student/marks/" + studentID)}>
+                    <Button variant="contained" className="actionButton" sx={styles.styledButton} onClick={() => navigate("//Admin/citizens/citizen/marks/" + studentID)}>
                         ADD SCORE
                     </Button>
                 }

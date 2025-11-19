@@ -45,7 +45,7 @@ const AddTeacher = () => {
   useEffect(() => {
     if (status === 'added') {
       dispatch(underControl())
-      navigate("/Admin/teachers")
+      navigate("/Admin/leaders")
     }
     else if (status === 'failed') {
       setMessage(response)
