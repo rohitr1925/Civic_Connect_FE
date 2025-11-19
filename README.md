@@ -1,6 +1,6 @@
 # Civic Connect MERN
 
-Civic Connect is a full-stack MERN (MongoDB, Express, React, Node.js) application designed to facilitate communication and management for civic organizations, communities, and educational institutions. It provides features for admins, teachers, students, and leaders to interact, manage events, notices, polls, complaints, and more.
+Civic Connect is a full-stack MERN (MongoDB, Express, React, Node.js) application designed to facilitate communication and management for civic organizations and communities. It provides features for admins, citizens and Community Leaders to interact, manage events, notices, polls, complaints, and more.
 
 ## Features
 
